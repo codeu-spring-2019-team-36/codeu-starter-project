@@ -51,10 +51,8 @@ function showMessageFormIfViewingSelf() {
 function fetchMessages() {
   const url = '/messages?user=' + parameterUsername;
   fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((messages) => {
+      .then(response => response.json())
+      .then(messages => {
         const messagesContainer = document.getElementById('message-container');
         if (messages.length == 0) {
           messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
