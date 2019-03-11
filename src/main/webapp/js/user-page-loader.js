@@ -49,7 +49,12 @@ function showMessageFormIfLoggedIn() {
 
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
+  //const url = '/messages?user=' + parameterUsername;
+  const parameterLanguage = urlParams.get('language');
   const url = '/messages?user=' + parameterUsername;
+  if(parameterLanguage) {
+    url += '&language=' + parameterLanguage;
+  }
   fetch(url)
       .then((response) => {
         return response.json();
