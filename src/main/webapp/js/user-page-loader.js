@@ -43,7 +43,24 @@ function showMessageFormIfLoggedIn() {
           messageForm.action = '/messages?recipient=' + parameterUsername;
           messageForm.classList.remove('hidden');
           document.getElementById('about-me-form').classList.remove('hidden');
+          fetchImageUploadUrlAndShowForm();
         }
+      });
+}
+
+/*
+* Fetches an image url from the servlet, then sets
+* the action attribute of the form and shows it
+*/
+function fetchImageUploadUrlAndShowForm() {
+  fetch('/image-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('message-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
       });
 }
 
