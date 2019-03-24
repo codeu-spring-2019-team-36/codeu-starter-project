@@ -3,7 +3,8 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
-import com.google.codeu.data.User;
+import com.google.codeu.data.Profile;
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +33,7 @@ public class ProfileServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
 
-    response.setContentType("text/html");
+    response.setContentType("application/json");
 
     String user = request.getParameter("user");
 
@@ -41,17 +42,16 @@ public class ProfileServlet extends HttpServlet {
       return;
     }
 
-    User userData = datastore.getUser(user);
+    Profile profileData = datastore.getProfile(user);
 
-    if (userData == null || userData.getProfile() == null) {
+    if (profileData == null) {
       return;
     }
 
-    //TO-DO change to for loop for printing
-    for (String info : userData.getProfile())
-    {
-      response.getOutputStream().println(info);
-    }
+    Gson gson = new Gson();
+    String json = gson.toJson(profileData);
+
+    response.getWriter().println(json);
   }
 
   @Override
@@ -66,14 +66,13 @@ public class ProfileServlet extends HttpServlet {
 
     String userEmail = userService.getCurrentUser().getEmail();
     
-    String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
+    // String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
     String phone = Jsoup.clean(request.getParameter("phone"), Whitelist.none());
-    String schedule = Jsoup.clean(request.getParameter("schedule"), Whitelist.none());
+    // String schedule = Jsoup.clean(request.getParameter("schedule"), Whitelist.none());
     
-    String[] userProfile = {name, phone, schedule};
     
-    User user = new User(userEmail, userProfile);
-    datastore.storeUser(user);
+    Profile profile = new Profile(userEmail, phone);
+    datastore.storeProfile(profile);
 
     response.sendRedirect("/user-page.html?user=" + userEmail);
   }

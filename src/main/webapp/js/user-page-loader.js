@@ -41,7 +41,7 @@ function showMessageFormIfViewingSelf() {
 		if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
 			const messageForm = document.getElementById("message-form");
 			messageForm.classList.remove("hidden");
-			document.getElementById("about-me-form").classList.remove("hidden");
+			document.getElementById("profile").classList.remove("hidden");
 		}
 	});
 }
@@ -98,19 +98,19 @@ function buildMessageDiv(message) {
 	return messageDiv;
 }
 
-function fetchAboutMe() {
-	const url = "/about?user=" + parameterUsername;
+function fetchProfile() {
+	const url = "/profile?user=" + parameterUsername;
 	fetch(url)
 	.then(response => {
-		return response.text();
+		return response.json();
 	})
-	.then(aboutMe => {
-		const aboutMeContainer = document.getElementById("about-me-container");
-		if (aboutMe == "") {
-			aboutMe = "This user has not entered any information yet.";
-		}
+	.then(profile => {
+		const profileContainer = document.getElementById('profile-container');
 
-		aboutMeContainer.innerHTML = aboutMe;
+		const profileText = 
+			`Email: ${profile.email || ''} Phone: ${profile.phone || ''}`;
+
+		profileContainer.innerHTML = profileText;
 	});
 }
 
@@ -119,5 +119,5 @@ function buildUI() {
 	setPageTitle();
 	showMessageFormIfViewingSelf();
 	fetchMessages();
-	fetchAboutMe();
+	fetchProfile();
 }

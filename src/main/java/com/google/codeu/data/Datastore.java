@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -32,7 +34,7 @@ import java.util.UUID;
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
 
-  private DatastoreService datastore; 
+  private DatastoreService datastore;
   private static int longestMessage = 0;
   private static HashMap<String, Integer> postsPerUser = new HashMap<String,Integer>();
   private static HashMap<String, Integer> messageCategoryCount = new HashMap<String, Integer>();
@@ -49,11 +51,11 @@ public class Datastore {
     messageEntity.setProperty("timestamp", message.getTimestamp());
     messageEntity.setProperty("recipient", message.getRecipient());
     messageEntity.setProperty("sentimentScore", message.getSentimentScore());
-    
+
     //If there are more than 20 words, perform content classification
     if (getNumWords(message.getText()) > 20) {
       messageEntity.setProperty("messageCategories", message.getMessageCategories());
-      
+
       String messageCategories = message.getMessageCategories().trim();
       String[] messageCategoryList = messageCategories.split("/");
 
@@ -65,7 +67,7 @@ public class Datastore {
         if (!messageCategoryCount.containsKey(category)) {
           messageCategoryCount.put(category, 1);
         } else {
-          messageCategoryCount.put(category, messageCategoryCount.get(category) + 1);        
+          messageCategoryCount.put(category, messageCategoryCount.get(category) + 1);
         }
       }
     } else {
@@ -74,12 +76,12 @@ public class Datastore {
     datastore.put(messageEntity);
 
     int messageLength = message.getText().length();
-    
+
     if (messageLength > longestMessage) {
       longestMessage = messageLength;
     }
     postsPerUser.put(message.getUser(), getMessages(message.getUser()).size());
-    
+
   }
 
   /**
@@ -126,22 +128,22 @@ public class Datastore {
       try {
         String idString = entity.getKey().getName();
 
-        UUID id = UUID.fromString(idString);    
+        UUID id = UUID.fromString(idString);
         String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
-        String recipient = (String) entity.getProperty("recipient"); 
+        String recipient = (String) entity.getProperty("recipient");
         // sentimentScore casted to Double from float first to avoid it being saved as a 0
-        float sentimentScore = entity.getProperty("sentimentScore") == null ? (float) 0.0 : 
+        float sentimentScore = entity.getProperty("sentimentScore") == null ? (float) 0.0 :
             ((Double) entity.getProperty("sentimentScore")).floatValue();
-        String messageCategories = (String) entity.getProperty("messageCategories");         
+        String messageCategories = (String) entity.getProperty("messageCategories");
 
         // Replace all image URLS in message with proper image HTML tags
         String regex = "(https?://([^\\s.]+.?[^\\s.]*)+/[^\\s.]+.(png|jpg))";
         String replacement = "<img src=\"$1\" />";
         String textWithImagesReplaced = text.replaceAll(regex, replacement);
 
-        Message message = new Message(id, user, textWithImagesReplaced, timestamp, 
+        Message message = new Message(id, user, textWithImagesReplaced, timestamp,
             recipient, sentimentScore, messageCategories);
 
         messages.add(message);
@@ -166,18 +168,30 @@ public class Datastore {
 
 
 
-  /* About me Section */
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
-    //modified
-    userEntity.setProperty("userProfile", user.getProfile());
     datastore.put(userEntity);
+
+    // Create an empty profile
+    Entity profileEntity = new Entity("Profile", userEntity.getKey());
+    profileEntity.setProperty("email", user.getEmail());
+    datastore.put(profileEntity);
+  }
+
+  /** Stores the User in Datastore. */
+  public void storeProfile(Profile profile) {
+    Key userKey = KeyFactory.createKey("User", profile.getEmail());
+    // Create an empty profile
+    Entity profileEntity = new Entity("Profile", userKey);
+    profileEntity.setProperty("email", profile.getEmail());
+    profileEntity.setProperty("phone", profile.getPhone());
+    datastore.put(profileEntity);
   }
 
   /**
-   * Returns the User owned by the email address, or
+   * Returns the User owned by the email address, or 
    * null if no matching User was found.
    */
   public User getUser(String email) {
@@ -190,11 +204,28 @@ public class Datastore {
       return null;
     }
 
-    //Modified
-    String[] userProfile = (String[]) userEntity.getProperty("userProfile");
-    User user = new User(email, userProfile);
+    User user = new User(email);
 
     return user;
+  }
+
+  /**
+   * Returns the Profile owned by the email address, or null if no matching User
+   * was found.
+   */
+  public Profile getProfile(String email) {
+    Query query = new Query("Profile")
+        .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+    PreparedQuery results = datastore.prepare(query);
+    Entity profileEntity = results.asSingleEntity();
+    if (profileEntity == null) {
+      return null;
+    }
+
+    Profile profile = new Profile((String) profileEntity.getProperty("email"),
+        (String) profileEntity.getProperty("phone"));
+
+    return profile;
   }
 
   /** Returns the longest message length of all users. */
@@ -224,7 +255,7 @@ public class Datastore {
         }
       }
       topUsers.add(currTopUser);
-    } 
+    }
     return topUsers;
   }
 
@@ -232,7 +263,7 @@ public class Datastore {
   public String getMessageCategories() {
     String messageCategories = "";
     for (String category : messageCategoryCount.keySet()) {
-      messageCategories = messageCategories + "(" + category + " " 
+      messageCategories = messageCategories + "(" + category + " "
           + messageCategoryCount.get(category) + ")" + " ; ";
     }
     return messageCategories;
@@ -245,7 +276,7 @@ public class Datastore {
     }
     String trimmedText = text.trim();
     String[] textWords = trimmedText.split("\\s+");
-    
+
     return textWords.length;
   }
 }
