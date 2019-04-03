@@ -40,7 +40,8 @@
   margin: 5px;
 }
 
-/* Images larger than message-body shrunk to fit */
+/* Shrinks images to fit if they are larger than
+  .message-body */
 .message-body img {
   display: block;
   margin-top: 25px;
