@@ -40,7 +40,8 @@
   margin: 5px;
 }
 
-/* Images larger than message-body shrunk to fit */
+/* Shrinks images to fit if they are larger than
+  .message-body */
 .message-body img {
   display: block;
   margin-top: 25px;
@@ -51,10 +52,4 @@
    user is not logged in or viewing their own page. */
 .hidden {
   display: none;
-}
-
-/* Add a bottom border to the bio header. */
-.bio-header {
-  border-bottom: thin solid black;
-  padding: 5px;
 }

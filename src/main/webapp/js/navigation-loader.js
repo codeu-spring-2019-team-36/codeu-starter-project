@@ -19,88 +19,62 @@
  * already logged in.
  */
 function addLoginOrLogoutLinkToNavigation() {
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElementExists) {
+  const navigationElement = document.getElementById("navigation");
+  if (!navigationElement) {
+    console.warn("Navigation element not found!");
     return;
   }
 
-  fetch('/login-status')
-      .then((response) => {
-        return response.json();
-      })
-      .then((loginStatus) => {
-        if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createListItem(createLink(
-              '/user-page.html?user=' + loginStatus.username, 'Your Page')));
-
-          navigationElement.appendChild(
-              createListItem(createLink('/logout', 'Logout')));
-        } else {
-          navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login')));
-        }
-      });
-}
-
-/**
- * Adds a Public Feed link to the page
- */
-function addPublicFeed() {
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElementExists) {
-    return;
-  }
-  navigationElement.appendChild(createListItem(createLink('/feed.html', 'Public Feed')));
-}
-
-/**
-* Adds link the matches feed for the current logged in user
-* If user not logged in, then does nothing
-*/
-function addMatchesFeed() {
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElementExists) {
-    return;
-  }
-
-  fetch('/login-status')
+  fetch("/login-status")
     .then(response => {
       return response.json();
     })
     .then(loginStatus => {
       if (loginStatus.isLoggedIn) {
-        navigationElement.appendChild(createListItem(createLink('/matches-feed.html', 'Matches Feed')));
+        navigationElement.appendChild(
+          createListItem(
+            createLink(
+              "/user-page.html?user=" + loginStatus.username,
+              "Your Page"
+            )
+          )
+        );
+
+        navigationElement.appendChild(
+          createListItem(createLink("/logout", "Logout"))
+        );
+      } else {
+        navigationElement.appendChild(
+          createListItem(createLink("/login", "Login"))
+        );
       }
-      else {
-        return;
-      }
-    })
+    });
 }
 
 /**
-* Checks the given navigation element is not null
-* Returns true if not null, otherwise outputs warning
-* to console and returns false
-* @param navigationElement What's being checked for nullity
-* @return true if {Element} navigationElement,is not null
-*         otherwise false and outputs warning to console
-*/
-function navigationElementExists(navigationElement) {
+ * Adds link to navigation bar
+ */
+function addNavBarElement(link, title) {
+  const navigationElement = document.getElementById("navigation");
   if (!navigationElement) {
-    console.warn('Navigation element not found!');
-    return false;
+    console.warn("Navigation element not found!");
+    return;
   }
-  return true;
+  navigationElement.appendChild(createListItem(createLink(link, title)));
 }
 
-
+/**
+ * Build Navigation Bar
+ */
 function buildNavBar() {
-	// Add login/logout link
-	addLoginOrLogoutLinkToNavigation();
-	// Add Public Feed link
-	addPublicFeed();
-  // Add matches feed link
-  addMatchesFeed();
+  // Add login/logout link
+  addLoginOrLogoutLinkToNavigation();
+  // Add Public Feed link
+  addNavBarElement("/feed.html", "Public Feed");
+  // Add Map link
+  addNavBarElement("/map.html", "Map");
+  // Add UFO Sightings link
+  addNavBarElement("ufo-sightings.html", "UFO Sightings");
 }
 
 /**
@@ -109,7 +83,7 @@ function buildNavBar() {
  * @return {Element} li element
  */
 function createListItem(childElement) {
-  const listItemElement = document.createElement('li');
+  const listItemElement = document.createElement("li");
   listItemElement.appendChild(childElement);
   return listItemElement;
 }
@@ -121,7 +95,7 @@ function createListItem(childElement) {
  * @return {Element} Anchor element
  */
 function createLink(url, text) {
-  const linkElement = document.createElement('a');
+  const linkElement = document.createElement("a");
   linkElement.appendChild(document.createTextNode(text));
   linkElement.href = url;
   return linkElement;

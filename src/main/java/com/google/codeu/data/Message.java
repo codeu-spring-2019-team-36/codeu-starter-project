@@ -26,7 +26,8 @@ public class Message {
   private String text;
   private long timestamp;
   private String recipient;
-  private String imageUrl;
+  private float sentimentScore;
+  private String messageCategories;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text}
@@ -36,9 +37,13 @@ public class Message {
    * @param user The user posting {@code this} message
    * @param text The content of {@code this} message
    * @param recipient The recipient of {@code this} message
+   * @param sentimentScore The sentiment analysis score of this message
+   * @param messageCategories The categories detected by category classification of this message
    */
-  public Message(String user, String text, String recipient) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient);
+  public Message(String user, String text, String recipient, 
+      float sentimentScore, String messageCategories) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), recipient, sentimentScore, 
+        messageCategories);
   }
 
   /**
@@ -51,32 +56,18 @@ public class Message {
    * @param timestamp The time {@code this} message was made at in milliseconds
    *                  since the Unix Epoch
    * @param recipient The recipient of {@code this} message
+   * @param sentimentScore The score returned by Sentiment Analysis of the message
+   * @param messageCategories The categories detected in the message
    */
-  public Message(UUID id, String user, String text, long timestamp, String recipient) {
-    this(id, user, text, timestamp, recipient, null);
-  }
-
-  /**
-   * Constructs a new {@link Message} posted by {@code user}, of the given 
-   * {@code UUID} at the given {@code timestamp}, with {@code text} content,
-   * and with the given {@code recipient}. Image in {@code this} message is
-   * found at the given 'imageUrl', if any, otherwise it must be null 
-   * @param id The ID of the user sending {@code this} message
-   * @param user The user posting {@code this} message
-   * @param text The content of {@code this} message
-   * @param timestamp The time {@code this} message was made at in milliseconds
-   *                  since the Unix Epoch
-   * @param recipient The recipient of {@code this} message
-   * @param imageUrl The url of the image in this message, if any, otherwise set null
-   */
-  public Message(UUID id, String user, String text, long timestamp, 
-                 String recipient, String imageUrl) {
+  public Message(UUID id, String user, String text, long timestamp, String recipient, 
+      float sentimentScore, String messageCategories) {
     this.id = id;
     this.user = user;
     this.text = text;
     this.timestamp = timestamp;
     this.recipient = recipient;
-    this.imageUrl = imageUrl;
+    this.sentimentScore = sentimentScore;
+    this.messageCategories = messageCategories;
   }
 
   public UUID getId() {
@@ -99,11 +90,11 @@ public class Message {
     return recipient;
   }
   
-  public String getImageUrl() {
-    return imageUrl;
+  public float getSentimentScore() {
+    return sentimentScore;
   }
-
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
+  
+  public String getMessageCategories() {
+    return messageCategories;
   }
 }
