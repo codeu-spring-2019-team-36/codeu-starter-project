@@ -243,6 +243,25 @@ public class Datastore {
   public int getLongestMessageCount() {
     return longestMessage;
   }
+  
+  /**
+   * 
+   */
+  public List<Profile> getAllProfiles() {
+    Query query = new Query("Profile");
+    PreparedQuery results = datastore.prepare(query);
+    List<Profile> allProfiles = new ArrayList<>();
+    for (Entity profileEntity : results.asIterable()) {
+      Profile profile = new Profile((String) profileEntity.getProperty("email"),
+          (String) profileEntity.getProperty("name"), 
+          (Double) profileEntity.getProperty("latitude"),
+          (Double) profileEntity.getProperty("longitude"),
+          (String) profileEntity.getProperty("phone"),(String) 
+          profileEntity.getProperty("schedule"));
+      allProfiles.add(profile);
+    }
+    return allProfiles;
+  }
 
   /** Returns the total number of users that have posted. */
   public int getTotalUserCount() {

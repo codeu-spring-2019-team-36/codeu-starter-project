@@ -3,6 +3,7 @@ package com.google.codeu.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Profile;
 import com.google.codeu.data.User;
 import com.google.gson.Gson;
 
@@ -44,9 +45,9 @@ public class MatchesFeedServlet extends HttpServlet{
       return;
     }
     
-    List<User> users = datastore.getAllUsers();
+    List<Profile> userProfiles = datastore.getAllProfiles();
     Gson gson = new Gson();
-    String json = gson.toJson(users);
+    String json = gson.toJson(userProfiles);
 
     response.getOutputStream().println(json);
   }
