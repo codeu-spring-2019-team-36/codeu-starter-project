@@ -40,17 +40,7 @@
   margin: 5px;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 /* Images larger than message-body shrunk to fit */
-=======
-/* Shrinks images to fit if they are larger than
-  .message-body */
->>>>>>> refs/remotes/origin/master
-=======
-/* Shrinks images to fit if they are larger than
-  .message-body */
->>>>>>> branch 'feature_Matches_Feed' of https://github.com/codeu-spring-2019-team-36/codeu-starter-project.git
 .message-body img {
   display: block;
   margin-top: 25px;
@@ -62,12 +52,9 @@
 .hidden {
   display: none;
 }
-<<<<<<< HEAD
 
 /* Add a bottom border to the bio header. */
-.bio-header {
+.profile-header {
   border-bottom: thin solid black;
   padding: 5px;
 }
-=======
->>>>>>> refs/remotes/origin/master
