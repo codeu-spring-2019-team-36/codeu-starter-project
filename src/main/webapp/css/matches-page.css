@@ -21,27 +21,50 @@
   width: 100%;
 }
 
-/* Give each message a rounded border. */
-.message-div {
-  border: thin solid black;
-  border-radius: 5px;
+/* Changes the page background color to a gold*/
+body {
+  background-color: white; /*#FFD700;*/
+}
+
+/* Sets page header to be centered and sets its font*/
+.page-header{
+  text-align: center;
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+}
+
+/* Give each profile match top border line and sets font. */
+.profile-div {
+  border-top: thin solid black;
   margin-top: 20px;
+  font-family: Verdana;
+}
+
+/* sets link to profile font color to black as default */
+a.profile-link:link {
+  color: black;
+}
+
+/* sets link to profile font color to white when hovered over */
+a.profile-link:hover {
+  color: rgba(0,0,0,0.25);
 }
 
 /* Add a bottom border to the message header. */
-.message-header {
-  border-bottom: thin solid black;
+.profile-header {
+  border-bottom: thin solid rgba(192, 192, 192, .25);
   padding: 5px;
+  font-weight: bold;
 }
 
 /* Give the message body a margin so the text
    isn't too close to the border. */
-.message-body {
+.profile-body {
   margin: 5px;
+  font-family:Verdana;
 }
 
 /* Images larger than message-body shrunk to fit */
-.message-body img {
+.profile-body img {
   display: block;
   margin-top: 25px;
   max-width: 75%;

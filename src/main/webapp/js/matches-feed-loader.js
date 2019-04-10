@@ -25,7 +25,10 @@ function fetchProfileForAllMatches(){
 function buildProfileDiv(profile){
  const usernameDiv = document.createElement('div');
  usernameDiv.classList.add("left-align");
- usernameDiv.appendChild(createLink('/user-page.html?user=' + profile.email, profile.name));
+
+ var profileLink = createLink('/user-page.html?user=' + profile.email, profile.name);
+ profileLink.classList.add("profile-link");
+ usernameDiv.appendChild(profileLink);
 
  const headerDiv = document.createElement('div');
  headerDiv.classList.add('profile-header');
