@@ -251,18 +251,10 @@ public class Datastore {
         .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity itemEntity = results.asSingleEntity();
-    try {
-      Item item = new Item((String) itemEntity.getProperty("title"),
-          (Double) itemEntity.getProperty("price"), (String) itemEntity.getProperty("email"),
-          (String) itemEntity.getProperty("description"));
-
-      return item;
-    } catch (NullPointerException e) {
-      System.out.println("No posting found with associated email: " + email);
-      // rethrow the exception
-      throw e;
-    }
-
+    Item item = new Item((String) itemEntity.getProperty("title"),
+        (Double) itemEntity.getProperty("price"), (String) itemEntity.getProperty("email"),
+        (String) itemEntity.getProperty("description"));
+    return item;
   }
 
   /** Returns the longest message length of all users. */
