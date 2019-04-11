@@ -29,6 +29,15 @@ function setPageTitle() {
   document.title = parameterUsername + " - User Page";
 }
 
+/** Sets the Item page link to point to user ad*/
+function setItemLink() {
+  var item_link = document.getElementById("item-link");
+  var aTag = document.createElement("a");
+  aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
+  aTag.innerHTML = "Your Ad";
+  item_link.appendChild(aTag);
+}
+
 /**
  * Shows the message form if the user is logged in and viewing their own page.
  */
@@ -151,4 +160,5 @@ function buildUI() {
   showMessageFormIfLoggedIn();
   fetchMessages();
   fetchProfile();
+  setItemLink();
 }
