@@ -165,7 +165,7 @@ public class Datastore {
   }
 
   /**
-   * Retrieves list of postings based on specified query
+   * Retrieves list of postings based on specified query.
    *
    * @return a list of results, or empty list if no results found
    */
