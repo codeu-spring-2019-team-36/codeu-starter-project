@@ -31,7 +31,7 @@ function setPageTitle() {
 
 /** Sets the Item page link to point to user ad*/
 function setItemLink() {
-  var item_link = document.getElementById("item-link");
+  const item_link = document.getElementById("item-link");
   var aTag = document.createElement("a");
   aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
   aTag.innerHTML = "Your Ad";
