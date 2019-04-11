@@ -28,10 +28,15 @@ public class ItemDataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String user = request.getParameter("user");
-    Item postingData = datastore.getPosting(user);
-    if (postingData == null) {
-      postingData = new Item();
+    Item postingData = null;
+    try {
+      postingData = datastore.getPosting(user);
+    } catch (NullPointerException e) {
+      System.out.println("in ItemDataServlet.java - No posting found for user:" + user);
+      response.getWriter().println("No posting found");
+      return;
     }
+
     Gson gson = new Gson();
     String json = gson.toJson(postingData);
     response.getWriter().println(json);

@@ -180,10 +180,6 @@ public class Datastore {
     Entity profileEntity = new Entity("Profile", profile.getEmail(), user);
     profileEntity.setProperty("email", profile.getEmail());
     profileEntity.setProperty("name", profile.getName());
-    /*
-     * if(profile.getProfilePicURL() != null) { profileEntity.setProperty("profile_pic",
-     * profile.getProfilePicURL()); }
-     */
     profileEntity.setProperty("latitude", profile.getLatitude());
     profileEntity.setProperty("longitude", profile.getLongitude());
     profileEntity.setProperty("phone", profile.getPhone());
@@ -250,19 +246,23 @@ public class Datastore {
    */
 
   public Item getPosting(String email) {
-    
+
     Query query = new Query("Posting")
         .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity itemEntity = results.asSingleEntity();
-    if (itemEntity == null) {
-      return null;
-    }
-    Item item = new Item((String) itemEntity.getProperty("title"),
-        (Double) itemEntity.getProperty("price"), (String) itemEntity.getProperty("email"),
-        (String) itemEntity.getProperty("description"));
+    try {
+      Item item = new Item((String) itemEntity.getProperty("title"),
+          (Double) itemEntity.getProperty("price"), (String) itemEntity.getProperty("email"),
+          (String) itemEntity.getProperty("description"));
 
-    return item;
+      return item;
+    } catch (NullPointerException e) {
+      System.out.println("No posting found with associated email: " + email);
+      // rethrow the exception
+      throw e;
+    }
+
   }
 
   /** Returns the longest message length of all users. */

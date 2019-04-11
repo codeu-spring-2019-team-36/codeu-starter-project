@@ -1,5 +1,5 @@
-let map;
 function createMap(user_lat, user_lng, user_title) {
+  let map;
   // create map object and place in map element
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: user_lat, lng: user_lng },
@@ -16,7 +16,7 @@ function createMap(user_lat, user_lng, user_title) {
 
 function buildUI() {
   // placeholder for marker title
-  var title = "";
+  let title = "";
   // fill form
   fetch("/item-data")
     .then(function(response) {

@@ -7,7 +7,7 @@ public class Item {
   private String email;
   private String description;
 
-  /* Item class. Stores information about a specific item posted by a user */
+  /** Item class. Stores information about a specific item posted by a user */
   public Item(String title, Double price, String email, String description) {
     this.title = title;
     this.price = price;
