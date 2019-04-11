@@ -111,11 +111,11 @@ public class Datastore {
     return messages;
   }
 
-    /**
-   * Gets postings made by all users. Needs refactoring after MVP 
+  /**
+   * Gets postings made by all users. Needs refactoring after MVP
    *
-   * @return a list of postings posted by all users, or an empty list if no user has posted an
-   *        item. List is sorted by time descending.
+   * @return a list of postings posted by all users, or an empty list if no user has posted an item.
+   *         List is sorted by time descending.
    */
   public List<Item> getAllPostings() {
     Query query = new Query("Posting");
@@ -173,12 +173,12 @@ public class Datastore {
     PreparedQuery results = datastore.prepare(query);
     List<Item> postings = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      Item item = new Item((String) entity.getProperty("title"),
-        (Double) entity.getProperty("price"), (String) entity.getProperty("email"),
-        (String) entity.getProperty("description"));
+      Item item =
+          new Item((String) entity.getProperty("title"), (Double) entity.getProperty("price"),
+              (String) entity.getProperty("email"), (String) entity.getProperty("description"));
       postings.add(item);
     }
-    return(postings);
+    return (postings);
   }
 
 
@@ -275,7 +275,7 @@ public class Datastore {
   public Item getPosting(String email) {
     Query query = new Query("Posting")
         .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-    return fetchPostings(query).get(0);   
+    return fetchPostings(query).get(0);
   }
 
   /** Returns the longest message length of all users. */
