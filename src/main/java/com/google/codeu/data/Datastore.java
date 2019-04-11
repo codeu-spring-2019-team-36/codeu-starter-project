@@ -112,6 +112,17 @@ public class Datastore {
   }
 
   /**
+   * Gets postings made by all users. Needs refactoring after MVP
+   *
+   * @return a list of postings posted by all users, or an empty list if no user has posted an item.
+   *         List is sorted by time descending.
+   */
+  public List<Item> getAllPostings() {
+    Query query = new Query("Posting");
+    return fetchPostings(query);
+  }
+
+  /**
    * Retrieves list of messages for a specific user.
    *
    * @return a list of results, or empty list if no results found
@@ -153,6 +164,22 @@ public class Datastore {
     return messages;
   }
 
+  /**
+   * Retrieves list of postings based on specified query.
+   *
+   * @return a list of results, or empty list if no results found
+   */
+  public List<Item> fetchPostings(Query query) {
+    PreparedQuery results = datastore.prepare(query);
+    List<Item> postings = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      Item item =
+          new Item((String) entity.getProperty("title"), (Double) entity.getProperty("price"),
+              (String) entity.getProperty("email"), (String) entity.getProperty("description"));
+      postings.add(item);
+    }
+    return (postings);
+  }
 
 
   /** Returns the total number of messages for all users. */
@@ -246,15 +273,9 @@ public class Datastore {
    */
 
   public Item getPosting(String email) {
-
     Query query = new Query("Posting")
         .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-    PreparedQuery results = datastore.prepare(query);
-    Entity itemEntity = results.asSingleEntity();
-    Item item = new Item((String) itemEntity.getProperty("title"),
-        (Double) itemEntity.getProperty("price"), (String) itemEntity.getProperty("email"),
-        (String) itemEntity.getProperty("description"));
-    return item;
+    return fetchPostings(query).get(0);
   }
 
   /** Returns the longest message length of all users. */
