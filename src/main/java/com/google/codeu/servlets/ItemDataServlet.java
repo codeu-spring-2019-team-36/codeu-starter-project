@@ -14,7 +14,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
 /**
- * Handles fetching postings
+ * Handles fetching postings.
  */
 @WebServlet("/item-data")
 public class ItemDataServlet extends HttpServlet {
