@@ -99,7 +99,8 @@ public class ProfileServlet extends HttpServlet {
       profilePicURL = imagesService.getServingUrl(options);
     }
     
-    Profile profile = new Profile(userEmail, profilePicURL, name, latitude, longitude, phone, schedule);
+    Profile profile = new Profile(userEmail, profilePicURL, 
+        name, latitude, longitude, phone, schedule);
     datastore.storeProfile(profile);
 
     response.sendRedirect("/user-page.html?user=" + userEmail);

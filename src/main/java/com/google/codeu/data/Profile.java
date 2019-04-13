@@ -13,6 +13,7 @@ public class Profile {
   public Profile() {
   }
 
+  /** Profile constructor */
   public Profile(String email, String profilePicURL, String name, Double latitude, 
       Double longitude, String phone, String schedule) {
     this.email = email;

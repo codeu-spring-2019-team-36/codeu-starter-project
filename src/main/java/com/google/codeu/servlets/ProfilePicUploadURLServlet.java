@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/profile-pic-upload-url")
 public class ProfilePicUploadURLServlet extends HttpServlet {
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
