@@ -1,6 +1,5 @@
 package com.google.codeu.servlets;
 
-import com.google.codeu.data.Item;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -10,6 +9,7 @@ import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Item;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
