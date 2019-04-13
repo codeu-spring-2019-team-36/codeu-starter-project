@@ -6,13 +6,16 @@ public class Item {
   private Double price;
   private String email;
   private String description;
+  private String itemPicURL;
 
   /** Item class. Stores information about a specific item posted by a user */
-  public Item(String title, Double price, String email, String description) {
+  public Item(String title, Double price, String email, String description,
+      String itemPicURL) {
     this.title = title;
     this.price = price;
     this.email = email;
     this.description = description;
+    this.itemPicURL = itemPicURL;
   }
 
   public Item() {}
@@ -31,6 +34,10 @@ public class Item {
 
   public String getDescription() {
     return description;
+  }
+  
+  public String getItemPicURL() {
+    return itemPicURL;
   }
 
 }

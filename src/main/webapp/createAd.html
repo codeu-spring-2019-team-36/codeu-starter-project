@@ -3,15 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Create an Ad</title>
+ <script src="/js/item-pic-loader.js"></script>
 </head>
-<body> 
-  <form action="/item-data" method="POST">
+<body onload="buildUI();"> 
+  <form id="ad-form" method="post" enctype="multipart/form-data">
     Title:<br> 
 	  <input type="text" name="title"><br><br>
-	  Price:<br> <input type="number"  min="1" name="price" ><br><br>
+	Upload Picture:<br>
+      <input type="file" name="item_pic"><br><br>
+	Price:<br> 
+		<input type="number"  min="1" name="price" ><br><br>
     Description:<br>
-    <textarea name="description" placeholder="A description of your item" rows=10 required></textarea><br><br>
-    <br><input type="submit" value="Post">
+    	<textarea name="description" placeholder="A description of your item" rows=10 required></textarea><br><br>
+    <br>
+    	<input type="submit" value="Post">
   </form>    
 </body>
 </html>
