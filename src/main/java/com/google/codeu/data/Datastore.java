@@ -131,7 +131,6 @@ public class Datastore {
         UUID id = UUID.fromString(idString);    
         String user = (String) entity.getProperty("user");
         String recipient = (String) entity.getProperty("recipient");
-        System.out.println("GET HERE!");
         String imageUrl = (String) entity.getProperty("imageUrl");
         
         String text = (String) entity.getProperty("text");
@@ -186,7 +185,7 @@ public class Datastore {
     Entity profileEntity = new Entity("Profile", profile.getEmail(), user);
     profileEntity.setProperty("email", profile.getEmail());
     profileEntity.setProperty("name", profile.getName());
-    if(profile.getProfilePicURL() != null) {
+    if (profile.getProfilePicURL() != null) {
       profileEntity.setProperty("profile_pic", profile.getProfilePicURL());
     }
     profileEntity.setProperty("latitude", profile.getLatitude());
