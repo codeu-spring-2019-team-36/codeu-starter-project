@@ -8,8 +8,6 @@ function fetchProfileURL() {
       profileForm.action = profileURL;
     });
 }
-
 function buildUI() {
-  console.log("BUILDING UI PEOPLE!");
   fetchProfileURL();
 }

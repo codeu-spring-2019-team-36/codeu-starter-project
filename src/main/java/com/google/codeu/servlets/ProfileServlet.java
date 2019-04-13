@@ -1,5 +1,11 @@
 package com.google.codeu.servlets;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.repackaged.com.google.gson.Gson;
@@ -7,6 +13,9 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Profile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,10 +78,13 @@ public class ProfileServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     
     String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
-    Double latitude = Double.valueOf(Jsoup.clean(request.getParameter("latitude"), Whitelist.none()));
-    Double longitude = Double.valueOf(Jsoup.clean(request.getParameter("longitude"), Whitelist.none()));
+    Double latitude = 
+        Double.valueOf(Jsoup.clean(request.getParameter("latitude"), Whitelist.none()));
+    Double longitude = 
+        Double.valueOf(Jsoup.clean(request.getParameter("longitude"), Whitelist.none()));
     String phone = Jsoup.clean(request.getParameter("phone"), Whitelist.none());
-    String schedule = Jsoup.clean(request.getParameter("schedule"), Whitelist.none());
+    String schedule = 
+        Jsoup.clean(request.getParameter("schedule"), Whitelist.none());
 
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);

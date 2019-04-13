@@ -65,7 +65,6 @@ function fetchImageUploadUrlAndShowForm() {
       const messageForm = document.getElementById("message-form");
       messageForm.action = imageUploadUrl;
       messageForm.classList.remove("hidden");
-      //document.getElementById("recipientInput").value = parameterUsername;
     });
 }
 
