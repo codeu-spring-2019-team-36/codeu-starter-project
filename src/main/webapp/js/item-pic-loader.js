@@ -9,5 +9,5 @@ function fetchItemPicURL() {
     });
 }
 function buildUI() {
-	fetchItemPicURL();
+  fetchItemPicURL();
 }

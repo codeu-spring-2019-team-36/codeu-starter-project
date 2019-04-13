@@ -44,8 +44,7 @@ function buildUI() {
       itemPicContainer.innerHTML = "Picture:" + "<br/>";
 
       if (item.itemPicURL) {
-        itemPicContainer.innerHTML +=
-          '<img src="' + item.itemPicURL + '" />';
+        itemPicContainer.innerHTML += '<img src="' + item.itemPicURL + '" />';
         itemPicContainer.innerHTML += "<br/>";
       }
       const profile_url = "/profile" + "?user=" + item.email;
