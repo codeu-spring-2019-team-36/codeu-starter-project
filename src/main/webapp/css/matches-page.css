@@ -1,0 +1,80 @@
+/*
+ * Copyright 2019 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Set the size of the message input to be 100 pixels high
+   and will fill the width of its parent element. */
+#message-input {
+  height: 100px;
+  width: 100%;
+}
+
+/* Changes the page background color to a gold*/
+body {
+  background-color: white; /*#FFD700;*/
+}
+
+/* Sets page header to be centered and sets its font*/
+.page-header{
+  text-align: center;
+  font-family: Arial; //Palatino, "Palatino Linotype", "Palatino LT STD";
+}
+
+/* Give each posting match top border line and sets font. */
+.posting-div {
+  border-top: thin solid black;
+  margin-top: 20px;
+  font-family: Verdana;
+}
+
+/* sets profile link font color to black as default
+   with no text decoration */
+a.posting-link:link {
+  color: black;
+  text-decoration: none;
+}
+
+/* sets profile link font to italics and makes it opaque */
+a.posting-link:hover {
+  color: rgba(0,0,0,0.25);
+  font-style: italic;
+}
+
+/* Add a bottom border to the message header. */
+.posting-header {
+  border-bottom: thin solid rgba(192, 192, 192, .25);
+  padding: 5px;
+  font-weight: bold;
+}
+
+/* Give the message body a margin so the text
+   isn't too close to the border. */
+.posting-body {
+  margin: 5px;
+  font-family:Verdana;
+}
+
+/* Images larger than message-body shrunk to fit */
+.posting-body img {
+  display: block;
+  margin-top: 25px;
+  max-width: 75%;
+}
+
+/* Use this to hide certain elements like forms if the
+   user is not logged in or viewing their own page. */
+.hidden {
+  display: none;
+}

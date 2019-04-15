@@ -1,24 +1,3 @@
-/*
-// Fetches profile for all users and adds them to page
-function fetchProfileForAllMatches(){
-  const url = '/matches';
-  fetch(url).then(response => {
-    return response.json();
-  }).then(allProfiles => {
-    const profileContainer = document.getElementById('profile-container');
-    if(allProfiles.length == 0){
-     allProfiles.innerHTML = '<p>You have no matches</p>';
-    }
-    else{
-     profileContainer.innerHTML = '';
-    }
-    allProfiles.forEach(profile => {
-     const profileDiv = buildProfileDiv(profile);
-     profileContainer.appendChild(profileDiv);
-    });
-  });
-}*/
-
 // Fetches all postings the user has matched with
 function fetchAllPostingMatches(){
   const url = '/matches';
@@ -42,35 +21,16 @@ function fetchAllPostingMatches(){
 /*
 * Builds div for the given profile
 * @param profile The profile which the div is being made for
-*
-function buildProfileDiv(profile){
- const usernameDiv = document.createElement('div');
- usernameDiv.classList.add("left-align");
- usernameDiv.appendChild(createLink('/user-page.html?user=' + profile.email, profile.name));
-
- const headerDiv = document.createElement('div');
- headerDiv.classList.add('profile-header');
- headerDiv.appendChild(usernameDiv);
-
- const bodyDiv = document.createElement('div');
- bodyDiv.classList.add('profile-body');
- bodyDiv.appendChild(document.createTextNode(profile.profile_pic + " " + profile.schedule + "\n" + "Latitude: " + profile.latitude + " Longitude: " + profile.longitude));
-
- const profileDiv = document.createElement('div');
- profileDiv.classList.add("profile-div");
- profileDiv.appendChild(headerDiv);
- profileDiv.appendChild(bodyDiv);
-
- return profileDiv;
-}*/
-
+* */
 function buildPostingDiv(posting){
  const postTitleDiv = document.createElement('div');
  postTitleDiv.appendChild(document.createTextNode(posting.title));
 
  const usernameDiv = document.createElement('div');
  usernameDiv.classList.add("left-align");
- usernameDiv.appendChild(createLink('/user-page.html?user=' + posting.email, posting.email));
+ var postingLink = createLink('/user-page.html?user=' + posting.email, posting.email);
+ postingLink.classList.add("posting-link");
+ usernameDiv.appendChild(postingLink);
 
  const headerDiv = document.createElement('div');
  headerDiv.classList.add('posting-header');
@@ -90,11 +50,6 @@ function buildPostingDiv(posting){
 
  return postingDiv;
 }
-
-/*// Fetch data and populate the UI of the page.
-function buildUI(){
- fetchProfileForAllMatches();
-}*/
 
 // Fetch data and populate the UI of the page.
 // Data here is all the postings the user has matched with
