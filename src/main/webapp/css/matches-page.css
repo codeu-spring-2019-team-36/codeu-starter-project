@@ -24,7 +24,9 @@
 /* Changes the page background color to a gold*/
 body {
   background-color: #FFD700;
+  max-width: none;
 }
+
 
 /* Sets page header to be centered and sets its font*/
 .page-header{
