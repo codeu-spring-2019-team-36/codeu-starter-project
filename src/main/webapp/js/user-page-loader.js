@@ -29,6 +29,15 @@ function setPageTitle() {
   document.title = parameterUsername + " - User Page";
 }
 
+/** Sets the Item page link to point to user ad*/
+function setItemLink() {
+  const item_link = document.getElementById("item-link");
+  var aTag = document.createElement("a");
+  aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
+  aTag.innerHTML = "Your Ad";
+  item_link.appendChild(aTag);
+}
+
 /**
  * Shows the message form if the user is logged in and viewing their own page.
  */
@@ -43,12 +52,12 @@ function showMessageFormIfLoggedIn() {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
         document.getElementById("profile");
-        //fetchImageUploadUrlAndShowForm();
+        fetchImageUploadUrlAndShowForm();
       }
     });
 }
 
-/*function fetchImageUploadUrlAndShowForm() {
+function fetchImageUploadUrlAndShowForm() {
   fetch("/image-upload-url")
     .then(response => {
       return response.text();
@@ -57,9 +66,8 @@ function showMessageFormIfLoggedIn() {
       const messageForm = document.getElementById("message-form");
       messageForm.action = imageUploadUrl;
       messageForm.classList.remove("hidden");
-      document.getElementById("recipientInput").value = parameterUsername;
     });
-}*/
+}
 
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
@@ -126,30 +134,25 @@ function fetchProfile() {
     .then(profile => {
       const profileContainer = document.getElementById("profile-container");
 
-      //fetchAndShowProfilePic();
+      profileContainer.innerHTML = "<br/>";
 
-      profileContainer.innerHTML = `Name: ${profile.name ||
+      if (profile.profilePicURL) {
+        profileContainer.innerHTML +=
+          '<img src="' + profile.profilePicURL + '" />';
+        profileContainer.innerHTML += "<br/>";
+      }
+      profileContainer.innerHTML += `Name: ${profile.name ||
         ""} Latitude: ${profile.latitude ||
         ""} Longitude:  ${profile.longitude || ""}  Phone: ${profile.phone ||
         ""} Schedule: ${profile.schedule || ""}`;
     });
 }
 
-/*function fetchAndShowProfilePic() {
-	  fetch('/image-upload-url')
-	      .then((response) => {
-	        return response.text();
-	      })
-	      .then((imageUploadUrl) => {
-	        const messageForm = document.getElementById('profile-form');
-	        messageForm.action = imageUploadUrl;
-	      });
-	}*/
-
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
+  fetchProfile();
   showMessageFormIfLoggedIn();
   fetchMessages();
-  fetchProfile();
+  setItemLink();
 }
