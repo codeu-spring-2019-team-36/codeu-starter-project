@@ -47,7 +47,8 @@ function showMessageFormIfLoggedIn() {
       return response.json();
     })
     .then(loginStatus => {
-      if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+
+      if (loginStatus.isLoggedIn) {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
         document.getElementById("profile");

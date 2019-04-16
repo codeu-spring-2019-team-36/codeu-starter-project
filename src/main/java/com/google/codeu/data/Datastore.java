@@ -121,6 +121,19 @@ public class Datastore {
     Query query = new Query("Posting");
     return fetchPostings(query);
   }
+  
+  /**
+   * Gets postings made by all users except the user with the given 'userEmail'
+   *
+   * @return a list of postings posted by all users except the user with the 
+   *         given 'userEmail'. Empty list if no other user has posted an item.
+   *         List is sorted by time descending.
+   */
+  public List<Item> getAllPostingsExcept(String userEmail) {
+    Query query = new Query("Posting")
+        .setFilter(new Query.FilterPredicate("email", FilterOperator.NOT_EQUAL, userEmail));
+    return fetchPostings(query);
+  }
 
   /**
    * Retrieves list of messages for a specific user.
@@ -288,6 +301,26 @@ public class Datastore {
   /** Returns the longest message length of all users. */
   public int getLongestMessageCount() {
     return longestMessage;
+  }
+  
+  /**
+   * 
+   */
+  public List<Profile> getAllProfiles() {
+    Query query = new Query("Profile");
+    PreparedQuery results = datastore.prepare(query);
+    List<Profile> allProfiles = new ArrayList<>();
+    for (Entity profileEntity : results.asIterable()) {
+      Profile profile = new Profile((String) profileEntity.getProperty("email"),
+          (String) profileEntity.getProperty("profile_pic"),
+          (String) profileEntity.getProperty("name"), 
+          (Double) profileEntity.getProperty("latitude"),
+          (Double) profileEntity.getProperty("longitude"),
+          (String) profileEntity.getProperty("phone"),(String) 
+          profileEntity.getProperty("schedule"));
+      allProfiles.add(profile);
+    }
+    return allProfiles;
   }
 
   /** Returns the total number of users that have posted. */

@@ -92,8 +92,12 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
+    String recipient = request.getParameter("recipient");    
+    String regex = "(https?://\\S+\\.(png|jpg))";
+    String replacement = "<img src=\"$1\" />";
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
-    String recipient = request.getParameter("recipient");
+    String textWithImageUrl = text.replaceAll(regex, replacement);
+
     float sentimentScore = getSentimentScore(text);
     String messageCategories = "";
     if (getNumWords(text) > 20) {
@@ -106,7 +110,7 @@ public class MessageServlet extends HttpServlet {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get("image");
     
-    Message message = new Message(user, text, recipient, sentimentScore, messageCategories);
+    Message message = new Message(user, textWithImageUrl, recipient, sentimentScore, messageCategories);
     
     if (blobKeys != null && !blobKeys.isEmpty()) {
       BlobKey blobKey = blobKeys.get(0);

@@ -19,6 +19,7 @@
  * already logged in.
  */
 function addLoginOrLogoutLinkToNavigation() {
+
   const navigationElement = document.getElementById("navigation");
   if (!navigationElement) {
     console.warn("Navigation element not found!");
@@ -64,11 +65,51 @@ function addNavBarElement(link, title) {
 }
 
 /**
- * Build Navigation Bar
- */
+* Adds link the matches feed for the current logged in user
+* If user not logged in, then does nothing
+*/
+function addMatchesFeed() {
+  const navigationElement = document.getElementById('navigation');
+  if (!navigationElementExists) {
+    return;
+  }
+
+  fetch('/login-status')
+    .then(response => {
+      return response.json();
+    })
+    .then(loginStatus => {
+      if (loginStatus.isLoggedIn) {
+        navigationElement.appendChild(createListItem(createLink('/matches-feed.html', 'Matches Feed')));
+      }
+      else {
+        return;
+      }
+    })
+}
+
+/**
+* Checks the given navigation element is not null
+* Returns true if not null, otherwise outputs warning
+* to console and returns false
+* @param navigationElement What's being checked for nullity
+* @return true if {Element} navigationElement,is not null
+*         otherwise false and outputs warning to console
+*/
+function navigationElementExists(navigationElement) {
+  if (!navigationElement) {
+    console.warn('Navigation element not found!');
+    return false;
+  }
+  return true;
+}
+
+
 function buildNavBar() {
-  // Add login/logout link
-  addLoginOrLogoutLinkToNavigation();
+	// Add login/logout link
+	addLoginOrLogoutLinkToNavigation();
+  // Add matches feed link
+  addMatchesFeed();
   // Add Public Feed link
   addNavBarElement("/feed.html", "Public Feed");
   // Add Map link
