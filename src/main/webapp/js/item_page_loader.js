@@ -1,3 +1,7 @@
+// Get ?user=XYZ parameter value
+const urlParams = new URLSearchParams(window.location.search);
+const parameterUsername = urlParams.get("user");
+
 function createMap(user_lat, user_lng, user_title) {
   let map;
   // create map object and place in map element
@@ -15,10 +19,16 @@ function createMap(user_lat, user_lng, user_title) {
 }
 
 function buildUI() {
+  // URL must include ?user=XYZ parameter. If not, redirect to homepage.
+  if (!parameterUsername) {
+    window.location.replace("/");
+  }
+
   // placeholder for marker title
   let title = "";
+  const url = "/item-data?user=" + parameterUsername;
   // fill form
-  fetch("/item-data")
+  fetch(url)
     .then(function(response) {
       return response.json();
     })
