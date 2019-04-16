@@ -39,6 +39,14 @@ function buildUI() {
       headerContainer.innerHTML = item.title;
       title = item.title;
       document.title = item.title + " - $" + item.price;
+      const itemPicContainer = document.getElementById("item-pic");
+
+      itemPicContainer.innerHTML = "Picture:" + "<br/>";
+
+      if (item.itemPicURL) {
+        itemPicContainer.innerHTML += '<img src="' + item.itemPicURL + '" />';
+        itemPicContainer.innerHTML += "<br/>";
+      }
       const profile_url = "/profile" + "?user=" + item.email;
       return fetch(profile_url);
     })
