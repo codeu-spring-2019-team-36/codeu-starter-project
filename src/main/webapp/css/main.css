@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-/* Prevent the page from becoming too wide. */
+/* Prevent the page from becoming too wide. and sets color to gold */
 body {
-  max-width: 600px;
+  background-color: #FFD700;
+  max-width: none;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -35,4 +36,47 @@ nav li {
   width: 500px;
   height: 500px;
   border: thin solid black;
+}
+
+/* Sets link colors to black and removes underlines */
+a:link {
+  color: black;
+  text-decoration: none;
+  font-family: Arial;
+  font-weight: lighter;
+}
+
+/* Link font becomes opaque and italic when hovered over */
+a:hover {
+  color: rgba(0,0,0,0.25);
+  font-style: italic;
+}
+
+/* Visited links remain black */
+a:visited {
+  color: black;
+}
+
+/* Sets heading font to arial */
+h1 {
+  font-family: Arial;
+}
+
+/* Sets paragraph font */
+p {
+  font-family: Verdana;
+}
+
+/* Sets background and font color of all inputs. Also makes border rounded */
+input {
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+}
+
+/* Sets background color to black and font color to white*/
+textarea {
+  background-color: black;
+  color: white;
+  border-radius: 4px;
 }
