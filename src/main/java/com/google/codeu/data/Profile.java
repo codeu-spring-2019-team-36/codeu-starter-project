@@ -47,11 +47,11 @@ public class Profile {
   public String getLocation() {
     return location;
   }
-  
+  //TODO:
   public Double getLongitude() {
     return 0.00;
   }
-  
+  //TODO:
   public Double getLatitude() {
     return 0.00;
   }
