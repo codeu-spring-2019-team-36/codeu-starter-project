@@ -142,8 +142,8 @@ function fetchProfile() {
         profileContainer.innerHTML += "<br/>";
       }
       profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Latitude: ${profile.latitude ||
-        ""} Longitude:  ${profile.longitude || ""}  Phone: ${profile.phone ||
+        ""} Latitude: ${profile.location ||
+        ""} Phone: ${profile.phone ||
         ""} Schedule: ${profile.schedule || ""}`;
     });
 }

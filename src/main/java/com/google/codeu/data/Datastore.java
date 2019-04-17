@@ -224,8 +224,7 @@ public class Datastore {
     if (profile.getProfilePicURL() != null) {
       profileEntity.setProperty("profile_pic", profile.getProfilePicURL());
     }
-    profileEntity.setProperty("latitude", profile.getLatitude());
-    profileEntity.setProperty("longitude", profile.getLongitude());
+    profileEntity.setProperty("location", profile.getLocation());
     profileEntity.setProperty("phone", profile.getPhone());
     profileEntity.setProperty("schedule", profile.getSchedule());
     datastore.put(profileEntity);
@@ -279,8 +278,7 @@ public class Datastore {
     Profile profile = new Profile((String) profileEntity.getProperty("email"),
         (String) profileEntity.getProperty("profile_pic"),
         (String) profileEntity.getProperty("name"), 
-        (Double) profileEntity.getProperty("latitude"),
-        (Double) profileEntity.getProperty("longitude"),
+        (String) profileEntity.getProperty("location"),
         (String) profileEntity.getProperty("phone"),
         (String) profileEntity.getProperty("schedule"));
 
@@ -314,8 +312,7 @@ public class Datastore {
       Profile profile = new Profile((String) profileEntity.getProperty("email"),
           (String) profileEntity.getProperty("profile_pic"),
           (String) profileEntity.getProperty("name"), 
-          (Double) profileEntity.getProperty("latitude"),
-          (Double) profileEntity.getProperty("longitude"),
+          (String) profileEntity.getProperty("location"),
           (String) profileEntity.getProperty("phone"),(String) 
           profileEntity.getProperty("schedule"));
       allProfiles.add(profile);

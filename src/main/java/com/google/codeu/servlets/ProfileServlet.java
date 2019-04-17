@@ -78,10 +78,7 @@ public class ProfileServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     
     String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
-    Double latitude = 
-        Double.valueOf(Jsoup.clean(request.getParameter("latitude"), Whitelist.none()));
-    Double longitude = 
-        Double.valueOf(Jsoup.clean(request.getParameter("longitude"), Whitelist.none()));
+    String location = Jsoup.clean(request.getParameter("location"), Whitelist.none());
     String phone = Jsoup.clean(request.getParameter("phone"), Whitelist.none());
     String schedule = 
         Jsoup.clean(request.getParameter("schedule"), Whitelist.none());
@@ -99,7 +96,7 @@ public class ProfileServlet extends HttpServlet {
       profilePicURL = imagesService.getServingUrl(options);
     }
     
-    Profile profile = new Profile(userEmail, profilePicURL, name, latitude, longitude, phone, schedule);
+    Profile profile = new Profile(userEmail, profilePicURL, name, location, phone, schedule);
     datastore.storeProfile(profile);
 
     response.sendRedirect("/user-page.html?user=" + userEmail);
