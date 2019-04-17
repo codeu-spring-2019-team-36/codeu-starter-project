@@ -4,7 +4,7 @@ function createMap() {
     center: { lat: 37.422403, lng: -122.088073 },
     zoom: 15
   });
-
+  
   // Create the search box and link it to the UI element.
   var input = document.getElementById("pac-input");
   var searchBox = new google.maps.places.SearchBox(input);

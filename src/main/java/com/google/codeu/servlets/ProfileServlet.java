@@ -78,7 +78,7 @@ public class ProfileServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     
     String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
-    String location = Jsoup.clean(request.getParameter("location"), Whitelist.none());
+    String location = Jsoup.clean(request.getParameter("pac-input"), Whitelist.none());
     String phone = Jsoup.clean(request.getParameter("phone"), Whitelist.none());
     String schedule = 
         Jsoup.clean(request.getParameter("schedule"), Whitelist.none());

@@ -8,6 +8,8 @@ public class Profile {
   private String location = " ";
   private String phone = " ";
   private String schedule = " ";
+  private Double latitude = 0.00;
+  private Double longitude = 0.00;
 
   public Profile() {
   }
@@ -44,5 +46,13 @@ public class Profile {
   
   public String getLocation() {
     return location;
+  }
+  
+  public Double getLongitude() {
+    return 0.00;
+  }
+  
+  public Double getLatitude() {
+    return 0.00;
   }
 }
