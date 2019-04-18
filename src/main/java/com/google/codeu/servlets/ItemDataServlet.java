@@ -38,14 +38,12 @@ public class ItemDataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String user = request.getParameter("user");
     Item postingData;
-    try {
       postingData = datastore.getPosting(user);
-    } catch (Exception e ) {
+    if (postingData == null) {
       System.out.println("in ItemDataServlet.java - No posting found for user:" + user);
       response.getWriter().println("No posting found");
       return;
     }
-
     Gson gson = new Gson();
     String json = gson.toJson(postingData);
     response.getWriter().println(json);

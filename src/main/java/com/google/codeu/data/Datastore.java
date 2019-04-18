@@ -121,13 +121,12 @@ public class Datastore {
     Query query = new Query("Posting");
     return fetchPostings(query);
   }
-  
+
   /**
    * Gets postings made by all users except the user with the given 'userEmail'
    *
-   * @return a list of postings posted by all users except the user with the 
-   *         given 'userEmail'. Empty list if no other user has posted an item.
-   *         List is sorted by time descending.
+   * @return a list of postings posted by all users except the user with the given 'userEmail'.
+   *         Empty list if no other user has posted an item. List is sorted by time descending.
    */
   public List<Item> getAllPostingsExcept(String userEmail) {
     Query query = new Query("Posting")
@@ -178,21 +177,20 @@ public class Datastore {
   }
 
   /**
-   * Retrieves list of postings based on specified query.
+   * Retrieves posting based on given query
    *
-   * @return a list of results, or empty list if no results found
+   * @return a single item as result, or null if no match
    */
-  public List<Item> fetchPostings(Query query) {
+  public Item fetchPosting(Query query) {
     PreparedQuery results = datastore.prepare(query);
-    List<Item> postings = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
-      Item item =
-          new Item((String) entity.getProperty("title"), (Double) entity.getProperty("price"),
-              (String) entity.getProperty("email"), (String) entity.getProperty("description"),
-              (String) entity.getProperty("item_pic"));
-      postings.add(item);
+    Entity entity = results.asSingleEntity();
+    if (entity != null) {
+      Item posting = new Item((String) entity.getProperty("title"),
+          (Double) entity.getProperty("price"), (String) entity.getProperty("email"),
+          (String) entity.getProperty("description"), (String) entity.getProperty("item_pic"));
+      return (posting);
     }
-    return (postings);
+    return null;
   }
 
 
@@ -275,11 +273,10 @@ public class Datastore {
     if (profileEntity == null) {
       return null;
     }
-    
+
     Profile profile = new Profile((String) profileEntity.getProperty("email"),
         (String) profileEntity.getProperty("profile_pic"),
-        (String) profileEntity.getProperty("name"), 
-        (Double) profileEntity.getProperty("latitude"),
+        (String) profileEntity.getProperty("name"), (Double) profileEntity.getProperty("latitude"),
         (Double) profileEntity.getProperty("longitude"),
         (String) profileEntity.getProperty("phone"),
         (String) profileEntity.getProperty("schedule"));
@@ -288,21 +285,21 @@ public class Datastore {
   }
 
   /**
-   * Returns the Item owned by the email address, or null if no matching Item was found. TODO: an
-   * item is uniquely identified by an email. change later so it is by a unique random ID
+   * Returns the Item owned by the email address. This does crash (gets handled in servlet) if user
+   * has no posting
    */
 
   public Item getPosting(String email) {
     Query query = new Query("Posting")
         .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-    return fetchPostings(query).get(0);
+    return fetchPosting(query);
   }
 
   /** Returns the longest message length of all users. */
   public int getLongestMessageCount() {
     return longestMessage;
   }
-  
+
   /**
    * 
    */
@@ -313,11 +310,11 @@ public class Datastore {
     for (Entity profileEntity : results.asIterable()) {
       Profile profile = new Profile((String) profileEntity.getProperty("email"),
           (String) profileEntity.getProperty("profile_pic"),
-          (String) profileEntity.getProperty("name"), 
+          (String) profileEntity.getProperty("name"),
           (Double) profileEntity.getProperty("latitude"),
           (Double) profileEntity.getProperty("longitude"),
-          (String) profileEntity.getProperty("phone"),(String) 
-          profileEntity.getProperty("schedule"));
+          (String) profileEntity.getProperty("phone"),
+          (String) profileEntity.getProperty("schedule"));
       allProfiles.add(profile);
     }
     return allProfiles;
