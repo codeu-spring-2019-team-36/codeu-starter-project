@@ -29,13 +29,22 @@ function setPageTitle() {
   document.title = parameterUsername + " - User Page";
 }
 
-/** Sets the Item page link to point to user ad*/
-function setItemLink() {
-  const item_link = document.getElementById("item-link");
-  var aTag = document.createElement("a");
-  aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
-  aTag.innerHTML = "Your Ad";
-  item_link.appendChild(aTag);
+/** Sets the Item page link to point to user ad if user has an ad*/
+function setItemLinkifHasAd() {
+  const url = "/item-data?user=" + parameterUsername;
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(posting => {
+      if (posting != "No posting found") {
+        const item_link = document.getElementById("item-link");
+        var aTag = document.createElement("a");
+        aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
+        aTag.innerHTML = "Your Ad";
+        item_link.appendChild(aTag);
+      }
+    });
 }
 
 /**
@@ -47,7 +56,6 @@ function showMessageFormIfLoggedIn() {
       return response.json();
     })
     .then(loginStatus => {
-
       if (loginStatus.isLoggedIn) {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
@@ -154,5 +162,5 @@ function buildUI() {
   fetchProfile();
   showMessageFormIfLoggedIn();
   fetchMessages();
-  setItemLink();
+  setItemLinkifHasAd();
 }
