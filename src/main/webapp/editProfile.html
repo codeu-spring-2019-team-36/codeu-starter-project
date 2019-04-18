@@ -12,8 +12,8 @@
 <body onload="createMap();">
   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
   <div id="map"></div>
-  <div id ="longitude" class="hidden"></div>
-  <div id ="latitude" class="hidden"></div>
+  <input id ="longitude" class="hidden">
+  <input id ="latitude" class="hidden">
 </body>
 
  <script src="/js/profile-loader.js"></script>
@@ -24,12 +24,13 @@
       <input type="text" name="name"><br><br>
       Upload Profile Picture:<br>
       <input type="file" name="profile_pic"><br><br>
+      <input name="latitude" id="latitude2" class="hidden">
+      <input name="longitude" id="longitude2" class="hidden"><br>
       Phone Number:<br>
       <input type="text" name="phone"><br><br>
       Schedule:<br>
       <textarea name="schedule" placeholder="A description of your schedule here..." rows=10 required></textarea><br><br>
       <br><input type="submit" value="Save changes">
-    </form>
-      
+    </form>    
 </body>
 </html>

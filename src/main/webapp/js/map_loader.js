@@ -45,8 +45,6 @@ function createMap() {
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(25, 25)
       };
-
-      console.log(bounds);
       
       // Create a marker for each place.
       markers.push(
@@ -68,10 +66,8 @@ function createMap() {
     map.fitBounds(bounds);
     
     const longitude = document.getElementById("longitude");
-    longitude.innerHTML = map.getCenter().lng().toString();
-    console.log(longitude.innerHTML);
+    longitude.value = map.getCenter().lng().toString();
     const latitude = document.getElementById("latitude");
-    lattiude.innerHTML = map.getCenter().lat().toString();  
-    console.log(latitude.innerHTML);
+    latitude.value = map.getCenter().lat().toString();  
   });
 }

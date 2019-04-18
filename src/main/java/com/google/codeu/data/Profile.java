@@ -14,12 +14,13 @@ public class Profile {
   public Profile() {
   }
 
-  public Profile(String email, String profilePicURL, String name, String location,
+  public Profile(String email, String profilePicURL, String name, String latitude, String longitude,
       String phone, String schedule) {
     this.email = email;
     this.name = name;
     this.profilePicURL = profilePicURL;
-    this.location = location;
+    this.latitude = Double.valueOf(latitude);
+    this.longitude = Double.valueOf(longitude);
     this.phone = phone;
     this.schedule = schedule;
   }
@@ -47,12 +48,12 @@ public class Profile {
   public String getLocation() {
     return location;
   }
-  //TODO:
+
   public Double getLongitude() {
-    return 0.00;
+    return longitude;
   }
-  //TODO:
+
   public Double getLatitude() {
-    return 0.00;
+    return latitude;
   }
 }
