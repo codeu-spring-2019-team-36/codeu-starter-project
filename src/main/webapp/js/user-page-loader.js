@@ -173,9 +173,7 @@ function fetchProfile() {
         profileContainer.innerHTML += "<br/>";
       }
       profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Latitude: ${profile.latitude ||
-        ""} Longitude:  ${profile.longitude || ""}  Phone: ${profile.phone ||
-        ""} Schedule: ${profile.schedule || ""}`;
+        ""} Phone: ${profile.phone || ""} Schedule: ${profile.schedule || ""}`;
     });
 }
 
