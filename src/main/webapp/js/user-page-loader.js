@@ -57,7 +57,10 @@ function setItemDeleteLink() {
       if (posting != "No posting found") {
         const item_link = document.getElementById("item-delete");
         var aTag = document.createElement("a");
-        aTag.setAttribute("href", "/item-data?user=" + parameterUsername + "&delete=true");
+        aTag.setAttribute(
+          "href",
+          "/item-data?user=" + parameterUsername + "&delete=true"
+        );
         aTag.innerHTML = "Delete Ad";
         item_link.appendChild(aTag);
         item_link.addEventListener("click", function() {
@@ -76,7 +79,6 @@ function showMessageFormIfLoggedIn() {
       return response.json();
     })
     .then(loginStatus => {
-
       if (loginStatus.isLoggedIn) {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
@@ -185,5 +187,4 @@ function buildUI() {
   fetchMessages();
   setItemLinkifHasAd();
   setItemDeleteLink();
-  
 }
