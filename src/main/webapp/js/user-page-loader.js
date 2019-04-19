@@ -47,7 +47,6 @@ function showMessageFormIfLoggedIn() {
       return response.json();
     })
     .then(loginStatus => {
-
       if (loginStatus.isLoggedIn) {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
@@ -142,8 +141,7 @@ function fetchProfile() {
         profileContainer.innerHTML += "<br/>";
       }
       profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Phone: ${profile.phone ||
-        ""} Schedule: ${profile.schedule || ""}`;
+        ""} Phone: ${profile.phone || ""} Schedule: ${profile.schedule || ""}`;
     });
 }
 

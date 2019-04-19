@@ -4,7 +4,7 @@ function createMap() {
     center: { lat: 37.422403, lng: -122.088073 },
     zoom: 15
   });
-  
+
   // Create the search box and link it to the UI element.
   var input = document.getElementById("pac-input");
   var searchBox = new google.maps.places.SearchBox(input);
@@ -12,7 +12,7 @@ function createMap() {
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener("bounds_changed", function() {
-	passive: true
+    passive: true;
     searchBox.setBounds(map.getBounds());
   });
 
@@ -20,7 +20,7 @@ function createMap() {
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   searchBox.addListener("places_changed", function() {
-	passive: true
+    passive: true;
     var places = searchBox.getPlaces();
 
     if (places.length == 0) {
@@ -47,7 +47,7 @@ function createMap() {
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(25, 25)
       };
-      
+
       // Create a marker for each place.
       markers.push(
         new google.maps.Marker({
@@ -66,10 +66,16 @@ function createMap() {
       }
     });
     map.fitBounds(bounds);
-    
+
     const longitude = document.getElementById("longitude");
-    longitude.value = map.getCenter().lng().toString();
+    longitude.value = map
+      .getCenter()
+      .lng()
+      .toString();
     const latitude = document.getElementById("latitude");
-    latitude.value = map.getCenter().lat().toString();  
+    latitude.value = map
+      .getCenter()
+      .lat()
+      .toString();
   });
 }
