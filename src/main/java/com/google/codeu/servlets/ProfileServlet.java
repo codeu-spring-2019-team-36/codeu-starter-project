@@ -78,8 +78,8 @@ public class ProfileServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     
     String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
-    String latitude = Jsoup.clean(request.getParameter("latitude"), Whitelist.none());
-    String longitude = Jsoup.clean(request.getParameter("longitude"), Whitelist.none());
+    Double latitude = Double.parseDouble(Jsoup.clean(request.getParameter("latitude"), Whitelist.none()));
+    Double longitude = Double.parseDouble(Jsoup.clean(request.getParameter("longitude"), Whitelist.none()));
     String phone = Jsoup.clean(request.getParameter("phone"), Whitelist.none());
     String schedule = 
         Jsoup.clean(request.getParameter("schedule"), Whitelist.none());

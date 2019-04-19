@@ -142,7 +142,6 @@ function fetchProfile() {
         profileContainer.innerHTML += "<br/>";
       }
       profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Latitude: ${profile.location ||
         ""} Phone: ${profile.phone ||
         ""} Schedule: ${profile.schedule || ""}`;
     });

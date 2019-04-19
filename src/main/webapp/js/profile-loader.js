@@ -1,4 +1,5 @@
 function fetchProfileURL() {
+	console.log("IN HERE");
   fetch("/profile-pic-upload-url")
     .then(response => {
       return response.text();
@@ -19,6 +20,6 @@ function fetchLocation() {
 }
 
 function buildUI() {
-  fetchLocation();
+  //fetchLocation();
   fetchProfileURL();
 }

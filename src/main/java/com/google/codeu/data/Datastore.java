@@ -279,8 +279,8 @@ public class Datastore {
     Profile profile = new Profile((String) profileEntity.getProperty("email"),
         (String) profileEntity.getProperty("profile_pic"),
         (String) profileEntity.getProperty("name"),
-        (String) profileEntity.getProperty("latitude"),
-        (String) profileEntity.getProperty("longitude"),
+        (Double) profileEntity.getProperty("latitude"),
+        (Double) profileEntity.getProperty("longitude"),
         (String) profileEntity.getProperty("phone"),
         (String) profileEntity.getProperty("schedule"));
 
@@ -314,8 +314,8 @@ public class Datastore {
       Profile profile = new Profile((String) profileEntity.getProperty("email"),
           (String) profileEntity.getProperty("profile_pic"),
           (String) profileEntity.getProperty("name"), 
-          (String) profileEntity.getProperty("latitude"),
-          (String) profileEntity.getProperty("longitude"),
+          (Double) profileEntity.getProperty("latitude"),
+          (Double) profileEntity.getProperty("longitude"),
           (String) profileEntity.getProperty("phone"),(String) 
           profileEntity.getProperty("schedule"));
       allProfiles.add(profile);
