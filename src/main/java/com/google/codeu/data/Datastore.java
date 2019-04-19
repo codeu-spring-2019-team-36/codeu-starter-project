@@ -195,6 +195,16 @@ public class Datastore {
     return (postings);
   }
 
+  /**
+   * Deletes user posting. Does nothing if user has no posting. User is identified by email
+   */
+  public void deletePosting(String email) {
+    Query query = new Query("Posting")
+    .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+    PreparedQuery results = datastore.prepare(query);
+    Entity posting = results.asSingleEntity();
+    datastore.delete(posting.getKey());
+  }
 
   /** Returns the total number of messages for all users. */
   public int getTotalMessageCount() {

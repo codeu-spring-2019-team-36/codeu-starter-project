@@ -46,6 +46,24 @@ function setItemLinkifHasAd() {
       }
     });
 }
+/** Sets the posting delete link*/
+function setItemDeleteLink() {
+  const url = "/item-data?user=" + parameterUsername;
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(posting => {
+      if (posting != "No posting found") {
+        const item_link = document.getElementById("item-delete");
+        var aTag = document.createElement("a");
+        aTag.setAttribute("href", "/item-data?user=" + parameterUsername + "&delete=true");
+        aTag.innerHTML = "Delete Ad";
+        item_link.appendChild(aTag);
+        item_link.addEventListener('click', function(){alert('Deleting');
+      }
+    });
+}
 
 /**
  * Shows the message form if the user is logged in and viewing their own page.
@@ -164,4 +182,6 @@ function buildUI() {
   showMessageFormIfLoggedIn();
   fetchMessages();
   setItemLinkifHasAd();
+  setItemDeleteLink();
+  
 }

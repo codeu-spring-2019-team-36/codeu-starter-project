@@ -38,6 +38,16 @@ public class ItemDataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String user = request.getParameter("user");
     Item postingData;
+    String delete = request.getParameter("delete");
+    // delete a posting
+    if (delete != null){
+      datastore.deletePosting(user);
+      System.out.println("in ItemDataServlet.java - Deleted posting for user:" + user);
+      response.getWriter().println("posting deleted! Going back to profile ...");
+      response.sendRedirect("/user-page.html?user=" + user);
+      return;
+    }
+    
     try {
       postingData = datastore.getPosting(user);
     } catch (Exception e) {
