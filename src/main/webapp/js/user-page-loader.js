@@ -60,7 +60,9 @@ function setItemDeleteLink() {
         aTag.setAttribute("href", "/item-data?user=" + parameterUsername + "&delete=true");
         aTag.innerHTML = "Delete Ad";
         item_link.appendChild(aTag);
-        item_link.addEventListener('click', function(){alert('Deleting');
+        item_link.addEventListener("click", function() {
+          alert("Deleting");
+        });
       }
     });
 }
