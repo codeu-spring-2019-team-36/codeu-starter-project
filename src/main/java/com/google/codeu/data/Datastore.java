@@ -188,7 +188,8 @@ public class Datastore {
     for (Entity entity : results.asIterable()) {
       Item item =
           new Item((String) entity.getProperty("title"), (Double) entity.getProperty("price"),
-              (String) entity.getProperty("email"), (String) entity.getProperty("description"));
+              (String) entity.getProperty("email"), (String) entity.getProperty("description"),
+              (String) entity.getProperty("item_pic"));
       postings.add(item);
     }
     return (postings);
@@ -236,6 +237,9 @@ public class Datastore {
     Entity postingEntity = new Entity("Posting", item.getEmail());
     postingEntity.setProperty("email", item.getEmail());
     postingEntity.setProperty("title", item.getTitle());
+    if (item.getItemPicURL() != null) {
+      postingEntity.setProperty("item_pic", item.getItemPicURL());
+    }
     postingEntity.setProperty("price", item.getPrice());
     postingEntity.setProperty("description", item.getDescription());
     datastore.put(postingEntity);

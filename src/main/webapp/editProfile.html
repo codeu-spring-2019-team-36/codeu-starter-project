@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Your Profile</title>
+  
 <link rel="stylesheet" href="/css/main.css">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQKQXGIYnT1dc3c09KXic9SgBteMtb7No&libraries=places"></script> 
+<script src="/js/map_loader.js"></script>
+</head>
+
+<body onload="createMap();">
+  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+  <div id="map"></div>
+</body>
  <script src="/js/profile-loader.js"></script>
 </head>
 <body onload="buildUI();">
@@ -16,6 +25,7 @@
       <input type="text" name ="latitude"><br><br>
       Location Longitude:<br>
       <input type="text" name="longitude"><br><br>
+
       Phone Number:<br>
       <input type="text" name="phone"><br><br>
       Schedule:<br>
