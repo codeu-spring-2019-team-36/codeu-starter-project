@@ -46,7 +46,7 @@ function setItemLinkifHasAd() {
       }
     });
 }
-    
+
 /**
  * Shows the message form if the user is logged in and viewing their own page.
  */
