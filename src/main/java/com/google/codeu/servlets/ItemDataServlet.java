@@ -40,7 +40,7 @@ public class ItemDataServlet extends HttpServlet {
     Item postingData;
     try {
       postingData = datastore.getPosting(user);
-    } catch (NullPointerException e) {
+    } catch (Exception e) {
       System.out.println("in ItemDataServlet.java - No posting found for user:" + user);
       response.getWriter().println("No posting found");
       return;

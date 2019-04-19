@@ -30,14 +30,23 @@ function setPageTitle() {
 }
 
 /** Sets the Item page link to point to user ad*/
-function setItemLink() {
-  const item_link = document.getElementById("item-link");
-  var aTag = document.createElement("a");
-  aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
-  aTag.innerHTML = "Your Ad";
-  item_link.appendChild(aTag);
+function setItemLinkifHasAd() {
+  const url = "/item-data?user=" + parameterUsername;
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(posting => {
+      if (posting != "No posting found") {
+        const item_link = document.getElementById("item-link");
+        var aTag = document.createElement("a");
+        aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
+        aTag.innerHTML = "Your Ad";
+        item_link.appendChild(aTag);
+      }
+    });
 }
-
+    
 /**
  * Shows the message form if the user is logged in and viewing their own page.
  */
@@ -154,5 +163,5 @@ function buildUI() {
   fetchProfile();
   showMessageFormIfLoggedIn();
   fetchMessages();
-  setItemLink();
+  setItemLinkifHasAd();
 }
