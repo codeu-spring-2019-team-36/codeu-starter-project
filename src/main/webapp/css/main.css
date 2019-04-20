@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/* Prevent the page from becoming too wide. */
+ 
+/* Prevent the page from becoming too wide. and sets color to gold */
 body {
-  max-width: 600px;
+  background-color: whitesmoke;
+  max-width: none;
+  text-align: center;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -32,7 +34,72 @@ nav li {
 }
 
 #map {
+  position: relative;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
   width: 500px;
   height: 500px;
   border: thin solid black;
+}
+
+/* Sets link colors to black and removes underlines */
+a:link {
+  color: black;
+  text-decoration: none;
+  font-family: 'Proxima Nova Soft', 'Helvetica Neue', sans-serif;
+  font-weight: lighter;
+}
+
+/* Link font becomes opaque and italic when hovered over */
+a:hover {
+  color: rgba(0,0,0,0.25);
+  font-style: italic;
+}
+
+/* Visited links remain black */
+a:visited {
+  color: black;
+}
+
+/* Sets heading font to 'Proxima Nova Soft', 'Helvetica Neue', sans-serif; */
+h1 {
+  font-family: 'Proxima Nova Soft', 'Helvetica Neue', sans-serif;
+  position: relative;
+  font-size: 75px;
+  text-align: center;
+}
+
+/* Sets paragraph font */
+p {
+  font-family: 'Proxima Nova Soft', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  width: 70%;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sets background and font color of all inputs. Also makes border rounded */
+input {
+  background-color: white;
+  color: gray;
+  border-radius: 4px;
+}
+
+/* Sets background color to black and font color to white*/
+textarea {
+  background-color: white;
+  color: gray;
+  border-radius: 4px;
+}
+
+#top {
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position: center;
+  background-image: url(https://i.pinimg.com/originals/e0/83/b6/e083b6aeb140ffc8e32e95fac0e35096.jpg);
+  background-color: rgba(255, 255, 255, 0.6);
+  background-blend-mode: soft-light;
+  text-align: center;
 }

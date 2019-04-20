@@ -1,62 +1,77 @@
-// Fetches about me section for all users and adds them to page
-function fetchBioForAllMatches(){
-  const url = '/matches';
-  fetch(url).then(response => {
-    return response.json();
-  }).then(allBios => {
-    const bioContainer = document.getElementById('bio-container');
-    if(allBios.length == 0){
-     allBios.innerHTML = '<p>You have no matches</p>';
-    }
-    else{
-     bioContainer.innerHTML = '';
-    }
-    allBios.forEach(bio => {
-     const bioDiv = buildBioDiv(bio);
-     bioContainer.appendChild(bioDiv);
+// Fetches all postings the user has matched with
+function fetchAllPostingMatches() {
+  const url = "/matches";
+  fetch(url)
+    .then(response => {
+      return response.json();
+    })
+    .then(allPostings => {
+      const postingContainer = document.getElementById("posting-container");
+      if (allPostings.length == 0) {
+        allPostings.innerHTML = "<p>You have no matches</p>";
+      } else {
+        postingContainer.innerHTML = "";
+      }
+      allPostings.forEach(posting => {
+        const postingDiv = buildPostingDiv(posting);
+        postingContainer.appendChild(postingDiv);
+      });
     });
-  });
 }
 
 /*
-* Builds div for the given bio
-* @param bio The bio which the div is being made for
-*/
-function buildBioDiv(bio){
- const usernameDiv = document.createElement('div');
- usernameDiv.classList.add("left-align");
- usernameDiv.appendChild(createLink('/user-page.html?user=' + bio.email, bio.email));
+ * Builds div for the given profile
+ * @param profile The profile which the div is being made for
+ * */
+function buildPostingDiv(posting) {
+  const postTitleDiv = document.createElement("div");
+  postTitleDiv.appendChild(document.createTextNode(posting.title));
 
- const headerDiv = document.createElement('div');
- headerDiv.classList.add('bio-header');
- headerDiv.appendChild(usernameDiv);
+  const usernameDiv = document.createElement("div");
+  usernameDiv.classList.add("left-align");
+  var postingLink = createLink(
+    "/user-page.html?user=" + posting.email,
+    posting.email
+  );
+  postingLink.classList.add("posting-link");
+  usernameDiv.appendChild(postingLink);
 
- const bodyDiv = document.createElement('div');
- bodyDiv.classList.add('bio-body');
- bodyDiv.appendChild(document.createTextNode(bio.aboutMe));
+  const headerDiv = document.createElement("div");
+  headerDiv.classList.add("posting-header");
+  headerDiv.appendChild(postTitleDiv);
+  headerDiv.appendChild(usernameDiv);
 
- const bioDiv = document.createElement('div');
- bioDiv.classList.add("bio-div");
- bioDiv.appendChild(headerDiv);
- bioDiv.appendChild(bodyDiv);
+  const bodyDiv = document.createElement("div");
+  bodyDiv.classList.add("posting-body");
+  bodyDiv.appendChild(
+    document.createTextNode("Description: " + posting.description)
+  );
+  bodyDiv.appendChild(document.createElement("br"));
+  bodyDiv.appendChild(document.createTextNode("Price: " + posting.price));
 
- return bioDiv;
+  const postingDiv = document.createElement("div");
+  postingDiv.classList.add("posting-div");
+  postingDiv.appendChild(headerDiv);
+  postingDiv.appendChild(bodyDiv);
+
+  return postingDiv;
 }
 
 // Fetch data and populate the UI of the page.
-function buildUI(){
- fetchBioForAllMatches();
+// Data here is all the postings the user has matched with
+function buildUI() {
+  fetchAllPostingMatches();
 }
 
 /**
-* Creates an anchor element.
-* @param {string} url
-* @param {string} text
-* @return {Element} Anchor element
-*/
+ * Creates an anchor element.
+ * @param {string} url
+ * @param {string} text
+ * @return {Element} Anchor element
+ */
 function createLink(url, text) {
-const linkElement = document.createElement('a');
-linkElement.appendChild(document.createTextNode(text));
-linkElement.href = url;
-return linkElement;
+  const linkElement = document.createElement("a");
+  linkElement.appendChild(document.createTextNode(text));
+  linkElement.href = url;
+  return linkElement;
 }

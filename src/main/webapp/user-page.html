@@ -27,31 +27,28 @@ limitations under the License.
     <nav>
       <ul id="navigation">
         <li><a href="/">Home</a></li>
+        <li><a href="/createAd.html">Create an Ad</a></li>
+        <li id = 'item-link'></li>
+        <li id = 'item-delete'></li>
+        
       </ul>
     </nav>
     <h1 id="page-title">User Page</h1>
 
-    <!--new about me section-->
-    <div id="about-me-container">Loading...</div>
-    <div id="about-me-form" class="hidden">
-      <form action="/about" method="POST">
-        <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
-        <br/>
-        <input type="submit" value="Submit">
-      </form>
-    </div>
+	<div id="profile-container">Loading...</div>
+	<nav>
+      <ul id="navigation">
+        <li><a href="/editProfile.html">Edit your profile.</a></li>
+      </ul>
+    </nav>
 
     <form id="message-form" action="/messages" method="POST" class="hidden">
-      Enter a new message:
-      <br/>
-      <textarea name="text" id="message-input"></textarea>
+      <textarea name="text" id="message-input" placeholder="Write your message here, remember to be nice 😊"></textarea>
       <br/>
       <input type="submit" value="Submit">
     </form>
     <hr/>
 
     <div id="message-container">Loading...</div>
-    
-    
   </body>
 </html>

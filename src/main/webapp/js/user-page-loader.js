@@ -29,20 +29,74 @@ function setPageTitle() {
   document.title = parameterUsername + " - User Page";
 }
 
+/** Sets the Item page link to point to user ad*/
+function setItemLinkifHasAd() {
+  const url = "/item-data?user=" + parameterUsername;
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(posting => {
+      if (posting != "No posting found") {
+        const item_link = document.getElementById("item-link");
+        var aTag = document.createElement("a");
+        aTag.setAttribute("href", "/itemPage.html?user=" + parameterUsername);
+        aTag.innerHTML = "Your Ad";
+        item_link.appendChild(aTag);
+      }
+    });
+}
+/** Sets the posting delete link*/
+function setItemDeleteLink() {
+  const url = "/item-data?user=" + parameterUsername;
+  fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(posting => {
+      if (posting != "No posting found") {
+        const item_link = document.getElementById("item-delete");
+        var aTag = document.createElement("a");
+        aTag.setAttribute(
+          "href",
+          "/item-data?user=" + parameterUsername + "&delete=true"
+        );
+        aTag.innerHTML = "Delete Ad";
+        item_link.appendChild(aTag);
+        item_link.addEventListener("click", function() {
+          alert("Deleting");
+        });
+      }
+    });
+}
+
 /**
  * Shows the message form if the user is logged in and viewing their own page.
  */
-function showMessageFormIfViewingSelf() {
+function showMessageFormIfLoggedIn() {
   fetch("/login-status")
     .then(response => {
       return response.json();
     })
     .then(loginStatus => {
-      if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+      if (loginStatus.isLoggedIn) {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
-        document.getElementById("about-me-form").classList.remove("hidden");
+        document.getElementById("profile");
+        fetchImageUploadUrlAndShowForm();
       }
+    });
+}
+
+function fetchImageUploadUrlAndShowForm() {
+  fetch("/image-upload-url")
+    .then(response => {
+      return response.text();
+    })
+    .then(imageUploadUrl => {
+      const messageForm = document.getElementById("message-form");
+      messageForm.action = imageUploadUrl;
+      messageForm.classList.remove("hidden");
     });
 }
 
@@ -89,6 +143,10 @@ function buildMessageDiv(message) {
   const bodyDiv = document.createElement("div");
   bodyDiv.classList.add("message-body");
   bodyDiv.innerHTML = message.text;
+  if (message.imageUrl) {
+    bodyDiv.innerHTML += "<br/>";
+    bodyDiv.innerHTML += '<img src="' + message.imageUrl + '" />';
+  }
 
   const messageDiv = document.createElement("div");
   messageDiv.classList.add("message-div");
@@ -98,26 +156,33 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
-function fetchAboutMe() {
-  const url = "/about?user=" + parameterUsername;
+function fetchProfile() {
+  const url = "/profile?user=" + parameterUsername;
   fetch(url)
     .then(response => {
-      return response.text();
+      return response.json();
     })
-    .then(aboutMe => {
-      const aboutMeContainer = document.getElementById("about-me-container");
-      if (aboutMe == "") {
-        aboutMe = "This user has not entered any information yet.";
-      }
+    .then(profile => {
+      const profileContainer = document.getElementById("profile-container");
 
-      aboutMeContainer.innerHTML = aboutMe;
+      profileContainer.innerHTML = "<br/>";
+
+      if (profile.profilePicURL) {
+        profileContainer.innerHTML +=
+          '<img src="' + profile.profilePicURL + '" />';
+        profileContainer.innerHTML += "<br/>";
+      }
+      profileContainer.innerHTML += `Name: ${profile.name ||
+        ""} Phone: ${profile.phone || ""}`;
     });
 }
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
-  showMessageFormIfViewingSelf();
+  fetchProfile();
+  showMessageFormIfLoggedIn();
   fetchMessages();
-  fetchAboutMe();
+  setItemLinkifHasAd();
+  setItemDeleteLink();
 }
