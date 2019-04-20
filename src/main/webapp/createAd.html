@@ -8,11 +8,11 @@
 <body onload="buildUI();"> 
   <form id="ad-form" method="post" enctype="multipart/form-data">
     Title:<br> 
-	  <input type="text" name="title"><br><br>
+	  <input type="text" name="title" required><br><br>
 	Upload Picture:<br>
-      <input type="file" name="item_pic"><br><br>
+      <input type="file" name="item_pic" required><br><br>
 	Price:<br> 
-		<input type="number"  min="1" name="price" ><br><br>
+		<input type="number"  min="1" name="price" required><br><br>
     Description:<br>
     	<textarea name="description" placeholder="A description of your item" rows=10 required></textarea><br><br>
     <br>
