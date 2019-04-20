@@ -6,7 +6,6 @@ public class Profile {
   private String name = " ";
   private String profilePicURL = " ";
   private String phone = " ";
-  private String schedule = " ";
   private Double latitude = 0.00;
   private Double longitude = 0.00;
 
@@ -14,14 +13,13 @@ public class Profile {
   }
 
   public Profile(String email, String profilePicURL, String name, Double latitude, Double longitude,
-      String phone, String schedule) {
+      String phone) {
     this.email = email;
     this.name = name;
     this.profilePicURL = profilePicURL;
     this.latitude = latitude;
     this.longitude = longitude;
     this.phone = phone;
-    this.schedule = schedule;
   }
 
   public String getEmail() {
@@ -38,11 +36,7 @@ public class Profile {
   
   public String getPhone() {
     return phone;
-  }
-  
-  public String getSchedule() {
-    return schedule;
-  }
+  }  
 
   public Double getLongitude() {
     return longitude;
