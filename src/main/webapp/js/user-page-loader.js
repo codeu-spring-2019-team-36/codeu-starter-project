@@ -173,7 +173,7 @@ function fetchProfile() {
         profileContainer.innerHTML += "<br/>";
       }
       profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Phone: ${profile.phone || ""} Schedule: ${profile.schedule || ""}`;
+        ""} Phone: ${profile.phone || ""}`;
     });
 }
 
