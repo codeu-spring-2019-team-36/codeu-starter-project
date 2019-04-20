@@ -73,6 +73,8 @@ public class ItemDataServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     String title = Jsoup.clean(request.getParameter("title"), Whitelist.none());
     String price = request.getParameter("price");
+    String start = request.getParameter("start");
+    String end = request.getParameter("end");
     String description = Jsoup.clean(request.getParameter("description"), Whitelist.none());
 
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -89,7 +91,7 @@ public class ItemDataServlet extends HttpServlet {
     }
 
     // create an item and store in Datastore
-    Item item = new Item(title, Double.parseDouble(price), userEmail, description, itemPicURL);
+    Item item = new Item(title, Double.parseDouble(price), userEmail, start, end, description, itemPicURL);
     datastore.storePosting(item);
     response.sendRedirect("/user-page.html?user=" + userEmail);
   }

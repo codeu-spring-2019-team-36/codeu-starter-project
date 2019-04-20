@@ -35,6 +35,8 @@ function buildUI() {
     .then(item => {
       const descriptionContainer = document.getElementById("description");
       descriptionContainer.innerHTML = item.description;
+      const datesContainer = document.getElementById("datesss");
+      datesContainer.innerHTML = "Dates of Desired Living Arrangement: " + item.start +" - " + item.end;
       const headerContainer = document.getElementById("item-header");
       headerContainer.innerHTML = item.title;
       title = item.title;

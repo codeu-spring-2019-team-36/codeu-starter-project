@@ -186,8 +186,12 @@ public class Datastore {
     List<Item> postings = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       Item item = new Item((String) entity.getProperty("title"),
-          (Double) entity.getProperty("price"), (String) entity.getProperty("email"),
-          (String) entity.getProperty("description"), (String) entity.getProperty("item_pic"));
+          (Double) entity.getProperty("price"), 
+          (String) entity.getProperty("email"),
+          (String) entity.getProperty("start"),
+          (String) entity.getProperty("end"),
+          (String) entity.getProperty("description"), 
+          (String) entity.getProperty("item_pic"));
       postings.add(item);
     }
     return (postings);
@@ -248,6 +252,8 @@ public class Datastore {
       postingEntity.setProperty("item_pic", item.getItemPicURL());
     }
     postingEntity.setProperty("price", item.getPrice());
+    postingEntity.setProperty("start", item.getStart());
+    postingEntity.setProperty("end", item.getEnd());
     postingEntity.setProperty("description", item.getDescription());
     datastore.put(postingEntity);
   }
