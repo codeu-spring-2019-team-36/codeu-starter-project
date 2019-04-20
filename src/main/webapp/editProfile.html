@@ -14,11 +14,11 @@
 <body onload="createMap(); buildUI();">
   <form id = "profile-form" method="post" enctype="multipart/form-data">
   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-  <div id="map"></div>
+  <div id="map" style="align-content: center"></div>
   <!-- <input id ="longitude" class="hidden">
   <input id ="latitude" class="hidden">  -->
   
-
+  <div id="form">
     Name:<br>
     <input type="text" name="name"><br><br>
     Upload Profile Picture:<br>
@@ -32,6 +32,7 @@
     Schedule:<br>
     <textarea name="schedule" placeholder="A description of your schedule here..." rows=10 required></textarea><br><br>
     <br><input type="submit" value="Save changes">
+  </div>
   </form>    
 </body>
 </html>
