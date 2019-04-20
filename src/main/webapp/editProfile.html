@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Your Profile</title>
-
+  
 <link rel="stylesheet" href="/css/main.css">
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQKQXGIYnT1dc3c09KXic9SgBteMtb7No&libraries=places"></script> 
 <script src="/js/map_loader.js"></script>
@@ -14,8 +14,7 @@
 <body onload="createMap(); buildUI();"><br>
   <form id = "profile-form" method="post" enctype="multipart/form-data"><br><br>
   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-  <div id="map"></div><br><br>
-
+  <div id="map" style="align-content: center"></div><br>
     Name:<br>
     <input type="text" name="name" required>
     <input type="text" name="latitude" id="latitude" style="visibility: hidden" required><br><br>
@@ -25,6 +24,7 @@
     Phone Number:<br>
     <input type="text" name="phone" required><br><br><br>
     <br><input type="submit" value="Save changes">
+  </div>
   </form>    
 </body>
 </html>
