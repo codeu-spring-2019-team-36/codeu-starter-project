@@ -71,18 +71,23 @@ public class MatchesFeedServlet extends HttpServlet{
       
       @Override
       public int compare(Item postingAlpha, Item postingBeta) {
-        Profile alphaUser = datastore.getProfile(postingAlpha.getEmail());
-        Profile betaUser = datastore.getProfile(postingBeta.getEmail());
-        
-        double alphaLatDistFromCur = alphaUser.getLatitude() - user.getLatitude();
-        double alphaLongDistFromCur = alphaUser.getLongitude() - user.getLongitude();
-        double alphaSquaredDistFromCur = alphaLatDistFromCur * alphaLatDistFromCur + alphaLongDistFromCur * alphaLongDistFromCur;
-        
-        double betaLatDistFromCur = betaUser.getLatitude() - user.getLatitude();
-        double betaLongDistFromCur = betaUser.getLongitude() - user.getLongitude();
-        double betaSquaredDistFromCur = betaLatDistFromCur * betaLatDistFromCur + betaLongDistFromCur * betaLongDistFromCur;
-
-        return Double.compare(alphaSquaredDistFromCur, betaSquaredDistFromCur);
+        try {
+          Profile alphaUser = datastore.getProfile(postingAlpha.getEmail());
+          Profile betaUser = datastore.getProfile(postingBeta.getEmail());
+          
+          double alphaLatDistFromCur = alphaUser.getLatitude() - user.getLatitude();
+          double alphaLongDistFromCur = alphaUser.getLongitude() - user.getLongitude();
+          double alphaSquaredDistFromCur = alphaLatDistFromCur * alphaLatDistFromCur + alphaLongDistFromCur * alphaLongDistFromCur;
+          
+          double betaLatDistFromCur = betaUser.getLatitude() - user.getLatitude();
+          double betaLongDistFromCur = betaUser.getLongitude() - user.getLongitude();
+          double betaSquaredDistFromCur = betaLatDistFromCur * betaLatDistFromCur + betaLongDistFromCur * betaLongDistFromCur;
+  
+          return Double.compare(alphaSquaredDistFromCur, betaSquaredDistFromCur);
+        } catch(NullPointerException e) {
+          // User did not fill out all proper profile fields
+          return 0;
+        }
       }
     });
   }

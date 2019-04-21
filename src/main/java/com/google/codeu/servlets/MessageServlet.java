@@ -98,6 +98,8 @@ public class MessageServlet extends HttpServlet {
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String textWithImageUrl = text.replaceAll(regex, replacement);
 
+    // Temporarily disabled for show case does not work locally
+    // unsure if it works in cloud
     float sentimentScore = 0;// getSentimentScore(text);
     String messageCategories = "";
     if (getNumWords(text) > 20) {
@@ -170,5 +172,5 @@ public class MessageServlet extends HttpServlet {
     String[] textWords = trimmedText.split("\\s+");
     
     return textWords.length;
-  }
+  }    
 }

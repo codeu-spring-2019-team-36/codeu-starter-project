@@ -243,7 +243,7 @@ public class Datastore {
           (String) entity.getProperty("email"),
           (String) entity.getProperty("start"),
           (String) entity.getProperty("end"),
-          (String) entity.getProperty("description"),
+          (String) entity.getProperty("description"), 
           (String) entity.getProperty("item_pic"));
       postings.add(item);
     }
@@ -369,7 +369,11 @@ public class Datastore {
   }
 
   /**
+<<<<<<< HEAD
    *
+=======
+   * 
+>>>>>>> refs/remotes/origin/master
    */
   public List<Profile> getAllProfiles() {
     Query query = new Query("Profile");
