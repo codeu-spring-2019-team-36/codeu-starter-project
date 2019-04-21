@@ -98,31 +98,34 @@ public class MessageServlet extends HttpServlet {
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
     String textWithImageUrl = text.replaceAll(regex, replacement);
 
-    float sentimentScore = getSentimentScore(text);
+    float sentimentScore = 0;// getSentimentScore(text);
     String messageCategories = "";
     if (getNumWords(text) > 20) {
-      messageCategories = getMessageCategories(text).keySet().toString(); 
+      //messageCategories = getMessageCategories(text).keySet().toString(); 
     } else {
       messageCategories = "";
     }
 
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    
+    /*BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
-    List<BlobKey> blobKeys = blobs.get("image");
+    List<BlobKey> blobKeys = blobs.get("image");*/
     
     Message message = new Message(user, textWithImageUrl, recipient, sentimentScore, messageCategories);
     
-    if (blobKeys != null && !blobKeys.isEmpty()) {
+    
+    /*if (blobKeys != null && !blobKeys.isEmpty()) {
       BlobKey blobKey = blobKeys.get(0);
       ImagesService imagesService = ImagesServiceFactory.getImagesService();
       ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
       String imageUrl = imagesService.getServingUrl(options);
       message.setImageUrl(imageUrl);
-    }
+    }*/
     
     datastore.storeMessage(message);
 
-    response.sendRedirect("/user-page.html?user=" + recipient);
+    //response.sendRedirect("/user-page.html?user=" + recipient);
+    response.sendRedirect("/conversation.html?recipient=" + recipient);
   }
   
   /** Calculates the sentiment score of a message. */

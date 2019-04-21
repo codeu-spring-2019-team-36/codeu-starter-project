@@ -24,7 +24,10 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.Timestamp;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -96,6 +99,56 @@ public class Datastore {
     List<Message> messages = fetchMessages(query);
 
     return messages;
+  }
+
+  /* Returns a list of the messeages sent between 'user1' and 'user2'
+     sorted in descending order by time */
+  public List<Message> getMessagesBetween(String user1, String user2) {
+    List<Message> messagesFromUser1 = getMessages(user2);
+    for (int i = 0; i < messagesFromUser1.size();i++) {
+      Message message = messagesFromUser1.get(i);
+      if (!message.getUser().equals(user1)) {
+        messagesFromUser1.remove(i);
+        i--;
+      }
+    }
+    List<Message> messagesFromUser2 = getMessages(user1);
+    for (int i = 0; i < messagesFromUser2.size();i++) {
+      Message message = messagesFromUser2.get(i);
+      if (!message.getUser().equals(user2)) {
+        messagesFromUser2.remove(i);
+        i--;
+      }
+    }
+    return combineSorted(messagesFromUser1, messagesFromUser2);
+  }
+
+  /* Merges the two given lists in sorted descending order by time
+     Assumes the two lists are already sorted respectively */
+  private List<Message> combineSorted(List<Message> messages1, List<Message> messages2) {
+    List<Message> result = new ArrayList<>();
+    int p1 = 0;
+    int p2 = 0;
+    // while either pointer is still within bounds of their respective list
+    // Merges the two lists in sorted order
+    while (p1 < messages1.size() || p2 < messages2.size()) {
+      // initialize each message to its value or null if pointer out of bounds
+      Message message1 = p1 < messages1.size() ? messages1.get(p1) : null;
+      Message message2 = p2 < messages2.size() ? messages2.get(p2) : null;
+      if (message1 == null) {
+        result.add(message2);
+        p2++;
+      } else if (message2 == null) {
+        result.add(message1);
+        p1++;
+      } else {
+        boolean greaterThan2 = Long.compare(message1.getTimestamp(), message2.getTimestamp()) > 0;
+        result.add(greaterThan2 ? message1 : message2);
+        p1 = greaterThan2 ? p1 + 1 : p1;
+        p2 = !greaterThan2 ? p2 + 1 : p2;
+      }
+    }
+    return result;
   }
 
   /**
@@ -186,11 +239,11 @@ public class Datastore {
     List<Item> postings = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       Item item = new Item((String) entity.getProperty("title"),
-          (Double) entity.getProperty("price"), 
+          (Double) entity.getProperty("price"),
           (String) entity.getProperty("email"),
           (String) entity.getProperty("start"),
           (String) entity.getProperty("end"),
-          (String) entity.getProperty("description"), 
+          (String) entity.getProperty("description"),
           (String) entity.getProperty("item_pic"));
       postings.add(item);
     }
@@ -316,7 +369,7 @@ public class Datastore {
   }
 
   /**
-   * 
+   *
    */
   public List<Profile> getAllProfiles() {
     Query query = new Query("Profile");

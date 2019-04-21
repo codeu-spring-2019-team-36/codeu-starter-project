@@ -83,7 +83,9 @@ function showMessageFormIfLoggedIn() {
         const messageForm = document.getElementById("message-form");
         messageForm.classList.remove("hidden");
         document.getElementById("profile");
-        fetchImageUploadUrlAndShowForm();
+        messageForm.action = '/messages?recipient=' + parameterUsername;
+        messageForm.classList.remove("hidden");
+        //fetchImageUploadUrlAndShowForm();
       }
     });
 }
