@@ -109,6 +109,12 @@ function buildNavBar() {
   addLoginOrLogoutLinkToNavigation();
   // Add matches feed link
   addMatchesFeed();
+  // Add Public Feed link
+  addNavBarElement("/feed.html", "Public Feed");
+  // Add Map link
+  addNavBarElement("/map.html", "Map");
+  // Add UFO Sightings link
+  addNavBarElement("ufo-sightings.html", "UFO Sightings");
 }
 
 /**
