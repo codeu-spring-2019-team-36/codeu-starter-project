@@ -174,8 +174,9 @@ function fetchProfile() {
           '<img src="' + profile.profilePicURL + '" />';
         profileContainer.innerHTML += "<br/>";
       }
-      profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Phone: ${profile.phone || ""}`;
+      profileContainer.innerHTML += `Hi, I'm ${profile.name ||
+        ""}! Shoot me ad email or contact me at ${profile.phone || ""}.`;
+      //TODO add a bio section
     });
 }
 
