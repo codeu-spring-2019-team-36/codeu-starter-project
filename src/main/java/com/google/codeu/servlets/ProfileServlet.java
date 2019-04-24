@@ -81,6 +81,7 @@ public class ProfileServlet extends HttpServlet {
     Double latitude = Double.parseDouble(Jsoup.clean(request.getParameter("latitude"), Whitelist.none()));
     Double longitude = Double.parseDouble(Jsoup.clean(request.getParameter("longitude"), Whitelist.none()));
     String phone = Jsoup.clean(request.getParameter("phone"), Whitelist.none());
+    String bio = Jsoup.clean(request.getParameter("bio"), Whitelist.none());
     
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
@@ -95,7 +96,7 @@ public class ProfileServlet extends HttpServlet {
       profilePicURL = imagesService.getServingUrl(options);
     }
     
-    Profile profile = new Profile(userEmail, profilePicURL, name, latitude, longitude, phone);
+    Profile profile = new Profile(userEmail, profilePicURL, name, latitude, longitude, phone, bio);
     datastore.storeProfile(profile);
 
     response.sendRedirect("/user-page.html?user=" + userEmail);

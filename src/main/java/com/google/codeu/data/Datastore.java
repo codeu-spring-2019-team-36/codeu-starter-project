@@ -292,6 +292,7 @@ public class Datastore {
     profileEntity.setProperty("latitude", profile.getLatitude());
     profileEntity.setProperty("longitude", profile.getLongitude());
     profileEntity.setProperty("phone", profile.getPhone());
+    profileEntity.setProperty("bio", profile.getBio());
     datastore.put(profileEntity);
   }
 
@@ -347,7 +348,8 @@ public class Datastore {
         (String) profileEntity.getProperty("name"),
         (Double) profileEntity.getProperty("latitude"),
         (Double) profileEntity.getProperty("longitude"),
-        (String) profileEntity.getProperty("phone"));
+        (String) profileEntity.getProperty("phone"),
+        (String) profileEntity.getProperty("bio"));
 
     return profile;
   }
@@ -385,7 +387,8 @@ public class Datastore {
           (String) profileEntity.getProperty("name"),
           (Double) profileEntity.getProperty("latitude"),
           (Double) profileEntity.getProperty("longitude"),
-          (String) profileEntity.getProperty("phone"));
+          (String) profileEntity.getProperty("phone"),
+          (String) profileEntity.getProperty("bio"));
       allProfiles.add(profile);
     }
     return allProfiles;

@@ -2,6 +2,7 @@ package com.google.codeu.data;
 
 public class Profile {
 
+  private String bio = " ";
   private String email = " ";
   private String name = " ";
   private String profilePicURL = " ";
@@ -13,13 +14,18 @@ public class Profile {
   }
 
   public Profile(String email, String profilePicURL, String name, Double latitude, Double longitude,
-      String phone) {
+      String phone, String bio) {
     this.email = email;
     this.name = name;
     this.profilePicURL = profilePicURL;
     this.latitude = latitude;
     this.longitude = longitude;
     this.phone = phone;
+    this.bio = bio;
+  }
+  
+  public String getBio() {
+    return bio;
   }
 
   public String getEmail() {

@@ -36,14 +36,14 @@ function buildUI() {
       const descriptionContainer = document.getElementById("description");
       descriptionContainer.innerHTML = item.description;
       const datesContainer = document.getElementById("datesss");
-      datesContainer.innerHTML = "Dates of Desired Living Arrangement: " + item.start +" - " + item.end;
+      datesContainer.innerHTML = "Seeking living arrangement for " + item.start +" - " + item.end;
       const headerContainer = document.getElementById("item-header");
       headerContainer.innerHTML = item.title;
       title = item.title;
       document.title = item.title + " - $" + item.price;
       const itemPicContainer = document.getElementById("item-pic");
 
-      itemPicContainer.innerHTML = "Picture:" + "<br/>";
+      itemPicContainer.innerHTML = "<br/>";
 
       if (item.itemPicURL) {
         itemPicContainer.innerHTML += '<img src="' + item.itemPicURL + '" />';
