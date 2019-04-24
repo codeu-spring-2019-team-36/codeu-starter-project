@@ -33,6 +33,7 @@ function showMessageFormIfLoggedIn() {
         document.getElementById("profile");
         messageForm.action = '/messages?recipient=' + parameterRecipient;
         messageForm.classList.remove("hidden");
+        messageForm.scrollIntoView(true)
       }
     });
 }
@@ -86,11 +87,8 @@ function buildMessageDiv(message) {
 
 // Fetch data and populate the UI of the page.
 function buildUI() {
-  fetchMessages();
-}
-
-// Fetch data and populate the UI of the page.
-function buildUI() {
+  const messageContainer = document.getElementById("title");
+  messageContainer.innerHTML = "<h1>Direct Message with " + parameterRecipient + "</h1>"
   fetchMessages();
   showMessageFormIfLoggedIn();
 }
