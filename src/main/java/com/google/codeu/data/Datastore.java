@@ -123,10 +123,10 @@ public class Datastore {
     return combineSorted(messagesFromUser1, messagesFromUser2);
   }
 
-  /* Merges the two given lists in sorted descending order by time
-     Assumes the two lists are already sorted respectively */
+  /* Merges the two given lists in sorted ascending order by time
+     Assumes the two lists are already sorted descending respectively */
   private List<Message> combineSorted(List<Message> messages1, List<Message> messages2) {
-    List<Message> result = new ArrayList<>();
+    List<Message> sortedDescending = new ArrayList<>();
     int p1 = 0;
     int p2 = 0;
     // while either pointer is still within bounds of their respective list
@@ -136,19 +136,24 @@ public class Datastore {
       Message message1 = p1 < messages1.size() ? messages1.get(p1) : null;
       Message message2 = p2 < messages2.size() ? messages2.get(p2) : null;
       if (message1 == null) {
-        result.add(message2);
+        sortedDescending.add(message2);
         p2++;
       } else if (message2 == null) {
-        result.add(message1);
+        sortedDescending.add(message1);
         p1++;
       } else {
         boolean greaterThan2 = Long.compare(message1.getTimestamp(), message2.getTimestamp()) > 0;
-        result.add(greaterThan2 ? message1 : message2);
+        sortedDescending.add(greaterThan2 ? message1 : message2);
         p1 = greaterThan2 ? p1 + 1 : p1;
         p2 = !greaterThan2 ? p2 + 1 : p2;
       }
     }
-    return result;
+    /* Reverse order */
+    List<Message> sortedAscending = new ArrayList<>();
+    for (int i = sortedDescending.size() - 1; i >= 0; i--) {
+      sortedAscending.add(sortedDescending.get(i));
+    }
+    return sortedAscending;
   }
 
   /**

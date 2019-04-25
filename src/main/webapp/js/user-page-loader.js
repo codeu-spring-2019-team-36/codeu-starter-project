@@ -102,25 +102,64 @@ function fetchImageUploadUrlAndShowForm() {
     });
 }
 
-/** Fetches messages and add them to the page. */
-function fetchMessages() {
+/* Returns the login status of person viewing page */
+function loginStatus() {
+  fetch('/login-status')
+      .then((response) => {
+        return Promise.resolve(response.json());
+  });
+}
+
+/** Fetches convos and add them to the page. */
+function fetchConvos() {
+  fetch('/login-status')
+      .then((response) => {
+        return response.json();
+  })
+      .then((loginStatus) => {
+        if (loginStatus.isLoggedIn &&
+            loginStatus.username == parameterUsername) {
+          showAllConvos();
+        } else if (loginStatus.isLoggedIn) {
+          showConvoWithProfileBeingVisited();
+        }
+      });
+}
+
+/* Shows link to all convos of logged in user */
+function showAllConvos() {
   const url = "/messages?user=" + parameterUsername;
   fetch(url)
     .then(response => {
       return response.json();
     })
     .then(messages => {
-      const messagesContainer = document.getElementById("message-container");
+      const convosContainer = document.getElementById("message-container");
       if (messages.length == 0) {
-        messagesContainer.innerHTML = "<p>This user has no posts yet.</p>";
+        convosContainer.innerHTML = "<p>You have no conversations</p>";
       } else {
-        messagesContainer.innerHTML = "";
+        convosContainer.innerHTML = "";
       }
+      var convos = new Set();
       messages.forEach(message => {
-        const messageDiv = buildMessageDiv(message);
-        messagesContainer.appendChild(messageDiv);
+        convoWith = message.user;
+        convos.add(convoWith)
+      });
+      convos.forEach(convoWith => {
+        convoWith = convoWith;
+        const convoDiv = buildConvoDiv(convoWith);
+        convosContainer.appendChild(convoDiv);
       });
     });
+}
+
+/* Shows link to convo between logged in user and
+   the user of the profile they are visiting */
+function showConvoWithProfileBeingVisited() {
+  const convosContainer = document.getElementById("message-container");
+  convosContainer.innerHTML = "";
+  const convoDiv = buildConvoDiv(parameterUsername);
+  convosContainer.appendChild(convoDiv);
 }
 
 /**
@@ -128,34 +167,18 @@ function fetchMessages() {
  * @param {Message} message
  * @return {Element}
  */
-function buildMessageDiv(message) {
-  const headerDiv = document.createElement("div");
-  headerDiv.classList.add("message-header");
-  headerDiv.appendChild(
-    document.createTextNode(
-      message.user +
-        " - " +
-        new Date(message.timestamp) +
-        " [" +
-        message.sentimentScore +
-        "]"
-    )
+
+/* Builds and returns div object for with a link to the
+   conversation with the given user 'convoWith' */
+function buildConvoDiv(convoWith) {
+  const convoDiv = document.createElement("div");
+  convoDiv.classList.add("message-header");
+  var convoLink = createLink(
+    "/conversation.html?recipient=" + convoWith,
+    "Convo with " + convoWith
   );
-
-  const bodyDiv = document.createElement("div");
-  bodyDiv.classList.add("message-body");
-  bodyDiv.innerHTML = message.text;
-  if (message.imageUrl) {
-    bodyDiv.innerHTML += "<br/>";
-    bodyDiv.innerHTML += '<img src="' + message.imageUrl + '" />';
-  }
-
-  const messageDiv = document.createElement("div");
-  messageDiv.classList.add("message-div");
-  messageDiv.appendChild(headerDiv);
-  messageDiv.appendChild(bodyDiv);
-
-  return messageDiv;
+  convoDiv.appendChild(convoLink);
+  return convoDiv;
 }
 
 function fetchProfile() {
@@ -184,7 +207,15 @@ function buildUI() {
   setPageTitle();
   fetchProfile();
   showMessageFormIfLoggedIn();
-  fetchMessages();
+  //fetchMessages();
+  fetchConvos();
   setItemLinkifHasAd();
   setItemDeleteLink();
+}
+
+function createLink(url, text) {
+  const linkElement = document.createElement("a");
+  linkElement.appendChild(document.createTextNode(text));
+  linkElement.href = url;
+  return linkElement;
 }
