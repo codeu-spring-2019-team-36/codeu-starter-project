@@ -197,8 +197,8 @@ function fetchProfile() {
           '<img src="' + profile.profilePicURL + '" />';
         profileContainer.innerHTML += "<br/>";
       }
-      profileContainer.innerHTML += `Name: ${profile.name ||
-        ""} Phone: ${profile.phone || ""}`;
+      profileContainer.innerHTML += `${profile.bio || ""} --${profile.name ||
+        ""} (${profile.phone || ""})`;
     });
 }
 
