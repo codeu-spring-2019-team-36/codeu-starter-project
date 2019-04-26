@@ -96,8 +96,8 @@ public class MatchesFeedServlet extends HttpServlet{
       double phi2 = Math.toRadians(lat2);
       double deltaLambda = Math.toRadians(lon2 - lon1);
 
-      double distance = Math.acos(Math.sin(phi1) * Math.sin(phi2) +
-                        Math.cos(phi1) * Math.cos(phi2) * Math.cos(deltaLambda) ) * r;
+      double distance = Math.acos(Math.sin(phi1) * Math.sin(phi2)
+                        + Math.cos(phi1) * Math.cos(phi2) * Math.cos(deltaLambda)) * r;
 
       if (Double.isNaN(distance)) {
         return 0;
