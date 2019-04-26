@@ -25,21 +25,27 @@ function fetchAllPostingMatches() {
  * */
 function buildPostingDiv(posting) {
   const postTitleDiv = document.createElement("div");
-  postTitleDiv.appendChild(document.createTextNode(posting.title));
+  postTitleDiv.appendChild(
+    document.createTextNode(posting.title)
+  );
 
   const usernameDiv = document.createElement("div");
   usernameDiv.classList.add("left-align");
   var postingLink = createLink(
-    "/user-page.html?user=" + posting.email,
-    posting.email
-  );
+    "/user-page.html?user=" + posting.email, posting.email);
   postingLink.classList.add("posting-link");
   usernameDiv.appendChild(postingLink);
+
+  const distanceDiv = document.createElement("div");
+  distanceDiv.appendChild(
+    document.createTextNode(posting.distance + " miles away")
+  );
 
   const headerDiv = document.createElement("div");
   headerDiv.classList.add("posting-header");
   headerDiv.appendChild(postTitleDiv);
   headerDiv.appendChild(usernameDiv);
+  headerDiv.appendChild(distanceDiv);
 
   const bodyDiv = document.createElement("div");
   bodyDiv.classList.add("posting-body");
